@@ -1,0 +1,10 @@
+{
+  "applications": {
+    "InvisibleCollege": {
+      "applicationId": "G3rGUzGG2qtadffKpabAhfgiYpsevjVxbSjAEosL"
+    },
+    "_default": {
+      "link": "InvisibleCollege"
+    }
+  }
+}

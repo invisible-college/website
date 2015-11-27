@@ -1,0 +1,114 @@
+<html lang="en">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <body class="hyphenate">
+
+<h1>Statebus</h1>
+<i><a href="mailto:toomim@gmail.com">Michael Toomim</a> and the <a href="http://invisible.college">Invisible College</a></i>
+<abstract>
+    Anyone can add a website to the open web, but individual websites
+    are closed.  <!--Only Facebook employees can contribute to
+    Facebook, for example.--> And the economics of the web have led to
+    a number of large near-monopoly websites, such as Facebook and
+    Google.  To compete with these monopolies, we need open websites
+    that anyone can contribute to.  We can build open websites with a
+    new web architecture that defines a standard protocol for
+    the <i>insides</i> of websites.  This architecture,
+    called <conc>Statebus</conc>, both makes it easier to develop the
+    internals of a website, while simultaneously making it easy to
+    share the internals with other websites.
+</abstract>
+<!--
+<abstract>
+    The web allows anyone to contribute, by creating a site and
+    linking to other pages.  However, it provides 
+</abstract>
+
+<abstract>
+    Dynamic web applications can be much easier to program if we
+    automate the synchronization of state amongst their components
+    (DOM, models, REST endpoints, server caches,
+    databases, <i>etc.</i>).  We can automate this synchronization
+    with a standard protocol, that we call <conc>Statebus</conc>,
+    which improves upon <conc>REST</conc> to keep
+    state <i>synchronized</i>—not just transferred—amongst multiple
+    components.  Using this protocolor makes dynamic websites much
+    easier to program, while at the same time enabling other programs
+    and websites to build upon their state.
+</abstract>
+-->
+
+<img src="transition to statebus.jpg"/>
+
+<i>Caption:</i>
+<ol>
+  <li>Before the web, people could connect to monolith networks like
+  Aol, Compuserve and Prodigy.  Each had a proprietary protocol.  To
+  contribute to the monolith, you needed special permission.
+  Monoliths did not link to one another.
+
+  <li>On the web, every page has a URL, and can link to any other
+  page.  Websites add value to one another by linking to each other.
+  But they can only link to <i>pages</i>: the presentation of the
+  underlying data in a database; the surface of the websites.
+
+  <li>Statebus opens the <i>insides</i> of websites.  Each piece of
+  state has a URL.  A website's state can derive from other websites.
+
+</ol>
+
+<h2>The Web is Incomplete</h2>
+
+<h2>Architecture of Reactive State</h2>
+
+<!--
+<p><i>State Communications:</i>
+
+We have these <i>State Boundaries</i>.  Across them, we need special
+synchronization abilities.  Change methods.
+
+<p>(Examples: Server. Client. DOM vs. JS Models.  Each JS Model
+vs. others.  Database vs. activerecord.  Anything OOP with
+<i>encapsulated</i> state.)
+
+<p>State can change in lots of ways.  But you shouldn't pass that
+knowledge through the whole system.  You don't want every component to
+have to know all the ways the state might change, and have an update
+mechanism.
+
+<p>When you re-render from scratch, you only have to specify one
+way to draw it, instead of many ways to change it.
+
+
+<h3>Programming API</h3>
+
+Reactive functions are registered on callbacks, so that whenever state
+changes, the function is re-run.
+
+<h3>Network Protocol</h3>
+
+We support this with a few changes to REST, that
+supports <i>synchronization</i> and not just <i>transfer</i>.
+-->
+
+<p>
+
+
+  </body>
+
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Statebus</title>
+    <link rel="stylesheet" href="css" type="text/css"/>
+    <link rel="stylesheet" href="equity-b.css" type="text/css"/>
+    <link rel="stylesheet" media="(-webkit-min-device-pixel-ratio: 2)" href="equity-a.css" type="text/css"/>
+    <link rel="stylesheet" href="computer modern/Serif/cmun-serif.css"/>
+    <link rel="stylesheet" href="computer modern/Bright/cmun-bright.css"/>
+    <link rel="stylesheet" href="computer modern/Concrete/cmun-concrete.css"/>
+    <link rel="stylesheet" href="computer modern/Sans/cmun-sans.css"/>
+    <link rel="stylesheet" href="computer modern/Typewriter/cmun-typewriter.css"/>
+    <link rel="stylesheet" href="computer modern/Upright Italic/cmun-upright-italic.css"/>
+    <script type="text/javascript" src="hyphenator.js"></script>
+    <script type="text/javascript" src="hyphenator-english.js"></script>
+    <script type="text/javascript">Hyphenator.run();</script>
+  </head>
+</html>
