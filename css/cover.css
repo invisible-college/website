@@ -1,3 +1,4 @@
+/* Stylesheet for Invisible College website */
 
 /* Links */
 a,
@@ -63,20 +64,34 @@ body {
   max-width: 860px;
 }
 
+/* Class Information */
+
 h1 {
   width: 500px;
   display: block;
   font: 50px/45px 'Open Sans', sans-serif;
   color: #BBB;
   text-transform: uppercase;
-  margin: 0 0 30px 20px;
+  margin: 0 0 30px 0px;
 }
 
 .subtitle {
   font: 36px/28px 'Muli', sans-serif;
   color: #BBB;
-  margin: 0 0 30px 20px;
+  margin: 0 0 30px 0px;
   font-weight: 100;
+}
+
+.classInfo {
+  float: left;
+  position: relative;
+  padding-right: 10px;
+  width: 350px;
+}
+
+.classInfo p {
+  font-size: 16px;
+  font-weight: bold;
 }
 
 /*
@@ -273,11 +288,30 @@ row {
   margin-right: 10px;
 }
 
-input[type=text] {
-  font-size: 14px;
-  width: 33%;
-}
-
 .clear {
   clear: both;
+}
+
+/* Forms and Buttons */
+
+#promoCode {
+  width: 100px;
+}
+
+button.submit {
+  font-size: 14px;
+  height: 25px;
+  background-color: #CCC;
+  color: #333;
+  border: 0px;
+}
+
+input[type=text] {
+  background-color: gray;
+  border: 0px;
+  padding: 5px;
+  height: 25px;
+  font-size: 14px;
+  width: 33%;
+  margin: 5px;
 }
