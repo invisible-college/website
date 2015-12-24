@@ -3,28 +3,30 @@
 define(function() {
 
     // Our basic Todo model has `content`, `order`, and `done` attributes.
-    var Race = Parse.Object.extend("Race");
+    var Class = Parse.Object.extend("Class");
 
-    var RaceSubmission = Parse.Object.extend("RaceSubmission");
+    var Project = Parse.Object.extend("Project");
 
-    var Politician = Parse.Object.extend("Politician");
+    var Projects = Parse.Object.extend("Projects");
+
+    var ClassSession = Parse.Object.extend("ClassSession");
 
     // Collections
     // --------------------
 
-    var Races = Parse.Collection.extend({
+    var AndroidClassSessions = Parse.Collection.extend({
 
         // Reference to this collection's model.
-        model: Race
+        model: ClassSession
 
     });
 
     // publicly availible values
     return {
-        Race : Race,
-        RaceSubmission : RaceSubmission,
-        Politician : Politician,
-        Races : Races
+        Class : Class,
+        Project : Project,
+        ClassSession : ClassSession,
+        AndroidClassSessions : AndroidClassSessions
     }
 
 });

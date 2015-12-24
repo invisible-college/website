@@ -39,7 +39,7 @@ $(function() {
         'facebook'
         ];
     require(dependencyList, function(models,
-        RaceListView, LogInView, VoteView, ScoreView, SubmissionProfileView) {
+        ProjectView, LogInView, AndroidView) {
 
         var AppView = Parse.View.extend({
             // Instead of generating a new element, bind to the existing skeleton of
@@ -53,7 +53,7 @@ $(function() {
             render: function() {
                 if (Parse.User.current()) {
                     // console.log("The user is already logged in!");
-                    new RaceListView;
+                    new ProjectView();
                 } else {
                     new LogInView();
                 }
@@ -64,32 +64,22 @@ $(function() {
         // --------------------
         var AppRouter = Parse.Router.extend({
             routes: {
-                "vote/:id": "voteForRace",
-                "races": "viewRaces",
+                "project/:id": "project",
+                "android": "android",
                 "login": "logIn",
-                "my-score": "myScore",
-                "submissions": "submissions"
                     // Backbone will try to match the route above first
             },
 
-            voteForRace: function(id) {
-                new VoteView(id);
+            project: function(id) {
+                new ProjectView(id);
             },
 
-            submissions: function() {
-                new SubmissionProfileView();
-            },
-
-            viewRaces: function() {
-                new RaceListView();
+            android: function() {
+                new AndroidView();
             },
 
             logIn: function(){
                 new LogInView();
-            },
-
-            myScore: function(){
-                new ScoreView();
             },
 
         });

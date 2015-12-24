@@ -64,6 +64,11 @@ body {
   max-width: 860px;
 }
 
+.outer {
+  /* Healthy top margin to duck under navbar */
+  margin-top: 170px;
+}
+
 /* Class Information */
 
 h1 {
@@ -82,7 +87,22 @@ h1 {
   font-weight: 100;
 }
 
+.classHeadInfo {
+  float: left;
+  position: relative;
+  padding-right: 10px;
+}
+
+header {
+  font: 18px/14px 'Muli', sans-serif;
+  color: #BBB;
+  margin: 0 0 5px 0px;
+  font-weight: 300;
+  color: #BBB;
+}
+
 .classInfo {
+  margin-top: 75px;
   float: left;
   position: relative;
   padding-right: 10px;
@@ -213,9 +233,6 @@ p {
   }
 }
 */
-.cover-heading {
-  margin-top: 170px;
-}
 
 .section-title {
   padding-top: 100px;
@@ -302,16 +319,18 @@ button.submit {
   font-size: 14px;
   height: 25px;
   background-color: #CCC;
+  width: 200px;
   color: #333;
   border: 0px;
+  margin: 5px;
 }
 
-input[type=text] {
+input[type=text], textarea {
   background-color: gray;
   border: 0px;
   padding: 5px;
   height: 25px;
   font-size: 14px;
-  width: 33%;
+  width: 200px;
   margin: 5px;
 }
