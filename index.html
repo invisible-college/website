@@ -63,12 +63,38 @@
         <!-- <li class="active"><a href="/mission">Meetups</a></li> -->
         <li class=""><a href="#syllabus">Syllabus</a></li>
         <li class=""><a href="#mentors">Mentors</a></li>
-        <li class=""><a href="#contact">Contact</a></li>
       </ul>
     </nav>
   </div>
 </div>
 
+<!-- Example of a Statebus section -->
+<script type="hot">
+
+dom.BODY = ->
+  projects = fetch('/website/projects')
+
+  if not projects.list?
+    projects.list = [
+      {name: "Consider.it"},
+      {name: "Statebus"},
+      {name: "Cheeseburger"}
+    ]
+    save(projects)
+    console.log("Saving empty projects")
+
+  projects.list.map (project) ->
+    DIV
+      className: "outer"
+      DIV
+        className: "inner content cover hero"
+        H1
+          className: "cover-heading"
+          project.name
+
+</script>
+<!-- Example of a new HTML section -->
+<!--
 <div class="outer">
 <div class="inner content cover hero">
   <h1 class="cover-heading">Livecoding Streams</h1>
@@ -80,6 +106,7 @@
   </p></em>
 </div>
 </div>
+-->
 
 <!--
 <div class="container-fluid section-title" id="robot-heart-01">
@@ -97,26 +124,37 @@
 
 <div class="outer">
 <div class="inner content cover hero">
-  <h1 class="cover-heading">Learn Java and Android</h1>
-  <div class="subtitle">An interactive video chat course to write delightful mobile apps.</div>
+  <div class="classHeadInfo" style="width:500px;">
+    <h1>Learn Android</h1>
+    <div class="subtitle">An interactive video chat course to write delightful mobile apps.</div>
+  </div>
+  <div class="classHeadInfo" style="width:210px;">
+    <header>Sign up for a free trial workshop</header>
+    <form id="signup" method="POST">
+      <input type="text" placeholder="Name" name="firstName" />
+      <input type="text" placeholder="Email"      name="email" /><br/>
+      <button class="submit">Register</button>
+    </form>
+  </div>
 
   <div>
   <div class="classInfo">
-  <p>November 30th - December 16th, 2015</p>
-  <p>Mondays, Wednesdays, Fridays 7-9pm</p>
-  <p><a href="#session0"><b>Get a free trial workshop!</b></a></p>
+  <p>February 1st - 24th, 2015</p>
+  <p>Mondays, Wednesdays 7-9pm</p>
+
   </div>
 
   <div class="classInfo">
     <p>Introductory Price: <span id="price">$500</span><span id="promoPrice"></span> for 8 guided sessions</p>
 
+<!--
     <input type="text" id="promoCode" name="promoCode" placeholder="Promo Code" />
     <button id="promoSubmit" class="submit">Apply promo</button>
     <span id="promoMessage"></span>
-
+-->
     <!-- Stripe Button -->
         <!-- data-key="pk_test_4ZM29RHbM91a8ds2wwV5rQ4g" -->
-    <form action="http://aws.local-box.org/stripe" method="POST">
+    <form id="stripe" method="POST">
       <script
         id="stripe-button"
         src="https://checkout.stripe.com/checkout.js" class="stripe-button"
@@ -154,7 +192,7 @@
   </p>
 
   <p>
-  Pre-requisites: This is course is for people who already know Java and need a
+  Pre-requisites: This is a course for people who already know Java and need a
   review, or people who know another programming language and just need to
   practice syntax. If you need a gentler
   introduction, try <a href="">Codecademy's new Java track</a>.
@@ -188,7 +226,13 @@
   <b><a href="https://plus.google.com/events/cima5aebtah3olic11t4jd6utcs">Session 0:</a></b>
   </a>
   </div>
-  <div class="tdate"><i>Monday,<br/> Nov 30.<br/> 7-9pm PST</i></div>
+  <div class="tdate">
+    &nbsp;<br/>
+    &nbsp;<br/>
+    <!--
+    <i>Monday,<br/> Nov 30.<br/> 7-9pm PST</i>
+    -->
+  </div>
   <div class="tdesc">
   Setting up your Android dev environment.
   Installing the SDK.
@@ -203,7 +247,11 @@
   <b>Session 1:</b>
   </div>
   <div class="tdate">
+    &nbsp;<br/>
+    &nbsp;<br/>
+    <!--
   <i>Wednesday<br/> Dec 2<br/> 7-9pm PST</i>
+    -->
   </div>
   <div class="tdesc">
   Android flash cards using textviews.
@@ -218,7 +266,11 @@
   <b>Session 2:</b>
   </div>
   <div class="tdate">
+    &nbsp;<br/>
+    &nbsp;<br/>
+    <!--
   <i>Friday<br/> Dec 4<br/> 7-9pm PST</i>
+    -->
   </div>
   <div class="tdesc">
   Parse queries and updating.
@@ -232,7 +284,11 @@
   <b>Session 3:</b>
   </div>
   <div class="tdate">
+    &nbsp;<br/>
+    &nbsp;<br/>
+    <!--
   <i>Monday<br/> Dec 7<br/> 7-9pm PST</i>
+    -->
   </div>
   <div class="tdesc">
   Recording sound via the built-in microphone.
@@ -248,7 +304,11 @@
     <b>Session 4:</b>
   </div>
   <div class="tdate">
+    &nbsp;<br/>
+    &nbsp;<br/>
+    <!--
     <i>Wednesday<br/> Dec 9<br/> 7-9pm PST</i>
+    -->
   </div>
   <div class="tdesc">
     Location Services and Geographical Input, Displaying map views.
@@ -262,7 +322,11 @@
     <b>Session 5:</b>
   </div>
   <div class="tdate">
+    &nbsp;<br/>
+    &nbsp;<br/>
+    <!--
     <i>Friday<br/> Dec 11</br/> 7-9pm PST</i>
+    -->
   </div>
   <div>
     Offline Storage with SQLite
@@ -276,7 +340,11 @@
     <b>Session 6:</b>
   </div>
   <div class="tdate">
+    &nbsp;<br/>
+    &nbsp;<br/>
+    <!--
     <i>Monday<br/> Dec 14<br/> 7-9pm PST</i>
+    -->
   </div>
   <div class="tdesc">
     Geographical Tagging.
@@ -292,7 +360,11 @@
     <b>Session 7:</b>
   </div>
   <div class="tdate">
+    &nbsp;<br/>
+    &nbsp;<br/>
+    <!--
     <i>Wednesday, December 16. 7-9pm PST</i>
+    -->
   </div>
   <div class="tdesc">
     Android for Games. Custom views and layouts.
@@ -305,7 +377,11 @@
     <b>Session 8:</b>
   </div>
   <div class="tdate">
+    &nbsp;<br/>
+    &nbsp;<br/>
+    <!--
     <i>Friday<br/> Dec 18<br/> 7-9pm PST.</i>
+    -->
   </div>
   <div class="tdesc">
     Android for Games.
@@ -383,6 +459,7 @@ About your mentors:
 
 </div>
 
+<!--
 <div class="section-contact">
 
 <a name="contact">
@@ -407,6 +484,7 @@ teaching style.
 </form>
 
 </div>
+-->
 
 <div class="section-privacy">
 
@@ -454,10 +532,32 @@ teaching style.
   <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 
+  <!-- Code to handle promotional codes (not working yet) -->
   <script src="js/promo.js"></script>
 
-</script>
+<!-- Statebus 2 Code copied from Consider.It -->
+  <script>
+    minify = true
+    dropbox = "./"
+    statebus_version = 2
+    statebus_server = "socketios://consider.it:3002"
+  </script>
+  <script src="https://dl.dropboxusercontent.com/u/1000932/libs/singlefile.js"></script>
 
+<!-- Statebus 3 code that currently doesn't work -->
+  <script type="text/javascript">
+  // var statebus_version = 3;
+  // My AWS instance
+  var aws_ip='http://52.32.161.104';
+  var email_url = aws_ip+'/email';
+  $("form#signup").attr("action", email_url);
+  var pay_url = aws_ip+'/stripe';
+  $("form#stripe").attr("action", pay_url);
+  var statebus_server = aws_ip+':45678';
+  //var statebus_server = 'http://stateb.us:3002'
+  //var statebus_server = 'http://localhost:45678'
+  </script>
+  <script src="js/statebus-client.js"></script>
 
 </body>
 </html>
