@@ -4,7 +4,7 @@ define(['js/models'], function(models) {
 
     var ProjectsView = Parse.View.extend({
 
-        el: "#content",
+        el: "#main-content",
 
         events: {
         },
