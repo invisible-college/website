@@ -42,7 +42,7 @@ $(function() {
 
             render: function() {
                 // Initially we always just list all current projects
-                //new ProjectView();
+                new ProjectsView();
             }
         });
 
@@ -53,6 +53,7 @@ $(function() {
             routes: {
                 "projects/:id": "projects",
                 "android/:code": "android",
+                "android/": "android",
                 "email": "email",
                 "payment": "payment",
                 "privacy": "privacy",
