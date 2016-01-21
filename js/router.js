@@ -22,12 +22,15 @@ $(function() {
         'js/models',
         'js/views/projects-view',
         'js/views/android-view',
+        'js/views/web-view',
+        'js/views/classes-view',
         'js/views/email-view',
         'js/views/payment-view',
         'js/views/privacy-view',
         ];
     require(dependencyList, function(models,
-        ProjectsView, AndroidView, EmailView, PaymentView, PrivacyView) {
+        ProjectsView, AndroidView, WebView, ClassesView,
+        EmailView, PaymentView, PrivacyView) {
 
         // Main App View
         // --------------------
@@ -42,7 +45,7 @@ $(function() {
 
             render: function() {
                 // Initially we always just list all current projects
-                new ProjectsView();
+                //new ProjectsView();
             }
         });
 
@@ -51,12 +54,19 @@ $(function() {
 
         var AppRouter = Parse.Router.extend({
             routes: {
+                "projects": "projects",
                 "projects/:id": "projects",
-                "android/:code": "android",
+                "learn": "learn",
+                "android": "android",
                 "android/": "android",
+                "android/:code": "android",
+                "web": "web",
+                "web/": "web",
+                "web/:code": "web",
                 "email": "email",
                 "payment": "payment",
                 "privacy": "privacy",
+                "": "projects",
                     // Backbone will try to match the route above first
             },
 
@@ -66,6 +76,20 @@ $(function() {
                     "key": "view",
                     "view": "projects"
                 });
+            },
+
+            /* Handle prices and promotional codes here */
+            web: function(code) {
+                localSave({
+                    "key": "view",
+                    "view": "web"
+                });
+                localSave({
+                    "key": "/web/code",
+                    "view": "code"
+                });
+                console.log("Web code: " + code);
+                new WebView(code);
             },
 
             /* Handle prices and promotional codes here */
@@ -79,10 +103,19 @@ $(function() {
                     "view": "code"
                 });
                 console.log("Android code: " + code);
-                new AndroidView();
+                new AndroidView(code);
             },
 
-            email: function(){
+            learn: function() {
+                localSave({
+                    "key":"view",
+                    "view":"learn"
+                });
+                console.log("Classes constructor");
+                new ClassesView();
+            },
+
+            email: function() {
                 localSave({
                     "key":"view",
                     "view":"email"

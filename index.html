@@ -61,8 +61,8 @@
         <!--<li class=""><a href="/">Home</a></li> -->
         <!-- <li class="active"><a href="/mission">Mission</a></li> -->
         <!-- <li class="active"><a href="/mission">Meetups</a></li> -->
-        <li class=""><a href="#syllabus">Syllabus</a></li>
-        <li class=""><a href="#mentors">Mentors</a></li>
+        <li class=""><a href="#members">Members</a></li>
+        <li class=""><a href="#about">About</a></li>
       </ul>
     </nav>
   </div>
@@ -134,334 +134,22 @@ dom.BODY = ->
 </div>
 -->
 
-<script type="text/template" id="android-template">
+<script type="text/template" id="class-template">
 
-<div class="outer">
-<div class="inner content cover hero">
-  <div class="classHeadInfo" style="width:500px;">
-    <h1>Learn Android</h1>
-    <div class="subtitle">An interactive video chat course to write delightful mobile apps.</div>
-  </div>
-  <div class="classHeadInfo" style="width:210px;">
-    <header>Sign up for a free trial workshop</header>
-    <form id="signup" method="POST">
-      <input type="text" placeholder="Name" name="firstName" />
-      <input type="text" placeholder="Email"      name="email" /><br/>
-      <button class="submit">Register</button>
-    </form>
-  </div>
-
-  <div>
-  <div class="classInfo">
-  <p>February 1st - 24th, 2015</p>
-  <p>Mondays, Wednesdays 7-9pm</p>
-
-  </div>
-
-  <div class="classInfo">
-    <p>Introductory Price: <span id="price">$250</span><span id="promoPrice"></span> for 8 guided sessions</p>
-
-<!--
-    <input type="text" id="promoCode" name="promoCode" placeholder="Promo Code" />
-    <button id="promoSubmit" class="submit">Apply promo</button>
-    <span id="promoMessage"></span>
--->
-    <!-- Stripe Button -->
-        <!-- data-key="pk_test_4ZM29RHbM91a8ds2wwV5rQ4g" -->
-    <form id="stripe" method="POST">
-
-    </form>
-
-  </div>
-  <div class="clear"></div>
-
-
-
+<div class="section-header">
 </div>
-  <p>
-  Have a great idea for an app? Need to code up the minimum viable product for
-  your startup?
-  Do you want to compete in the
-  <a href="http://learning.xprize.org">Global Learning XPRIZE</a>
-  but don't know where to start?
-  </p>
 
-  <p>
-  We've designed this course for you. Someone who's curious about Android, the
-  mobile operating system running on the majority of devices around the world
-  including smartphones, tablets, Amazon’s Kindle Fire, watches, and more to
-  come. Someone who knows a little programming, but needs coaching and
-  accountability to be your best.
-  Learn more about how to control this modern pocket robot of yours, and the
-  heart that makes it tick.
-  </p>
-
-  <p>
-  Pre-requisites: This is a course for people who already know Java and need a
-  review, or people who know another programming language and just need to
-  practice syntax. If you need a gentler
-  introduction, try <a href="">Codecademy's new Java track</a>.
-  </p>
-
-  <p>
-  In this 9-session, 3 week course, you’ll learn the following key concepts.
-  You’ll go from being a Java novice to uploading three Android apps to an
-  online store, ready for your adoring fans and future customers. Our teaching
-  style will use
-  <a href="http://mobprogramming.org">mob programming</a> so that the whole
-  class codes together, learns by practicing, and stays engaged the whole time.
-  You'll receive individual, hands-on attention from
-  <a href="#mentors">our three expert mentors</a>
-  with years of industry and teaching experience.
-  </p>
+<div class="section-desc">
+</div>
 
 <!-- --------------------------------------------------------------------- -->
 
-<div>
-
-<a name="syllabus">
-<h3>Syllabus</h3>
-</a>
-
-<h4> Android Basics </h4>
-
-<row>
-  <div class="tnum">
-  <a name="session0">
-  <b><a href="https://plus.google.com/events/cima5aebtah3olic11t4jd6utcs">Session 0:</a></b>
-  </a>
-  </div>
-  <div class="tdate">
-    &nbsp;<br/>
-    &nbsp;<br/>
-    <!--
-    <i>Monday,<br/> Nov 30.<br/> 7-9pm PST</i>
-    -->
-  </div>
-  <div class="tdesc">
-  Setting up your Android dev environment.
-  Installing the SDK.
-  Using Android Studio, Gradle, Monitor, AVD.
-  Android hello world and console output.
-  </div>
-  <div class="clear"></div>
-</row>
-
-<row>
-  <div class="tnum">
-  <b>Session 1:</b>
-  </div>
-  <div class="tdate">
-    &nbsp;<br/>
-    &nbsp;<br/>
-    <!--
-  <i>Wednesday<br/> Dec 2<br/> 7-9pm PST</i>
-    -->
-  </div>
-  <div class="tdesc">
-  Android flash cards using textviews.
-  Using Parse for online data storage and retrieval.
-  Listviews.
-  </div>
-  <div class="clear"></div>
-</row>
-
-<row>
-  <div class="tnum">
-  <b>Session 2:</b>
-  </div>
-  <div class="tdate">
-    &nbsp;<br/>
-    &nbsp;<br/>
-    <!--
-  <i>Friday<br/> Dec 4<br/> 7-9pm PST</i>
-    -->
-  </div>
-  <div class="tdesc">
-  Parse queries and updating.
-  Taking pictures with the built-in camera.
-  </div>
-  <div class="clear"></div>
-</row>
-
-<row>
-  <div class="tnum">
-  <b>Session 3:</b>
-  </div>
-  <div class="tdate">
-    &nbsp;<br/>
-    &nbsp;<br/>
-    <!--
-  <i>Monday<br/> Dec 7<br/> 7-9pm PST</i>
-    -->
-  </div>
-  <div class="tdesc">
-  Recording sound via the built-in microphone.
-  Playing back sound.
-  </div>
-  <div class="clear"></div>
-</row>
-
-<h4> Android Maps </h4>
-
-<row>
-  <div class="tnum">
-    <b>Session 4:</b>
-  </div>
-  <div class="tdate">
-    &nbsp;<br/>
-    &nbsp;<br/>
-    <!--
-    <i>Wednesday<br/> Dec 9<br/> 7-9pm PST</i>
-    -->
-  </div>
-  <div class="tdesc">
-    Location Services and Geographical Input, Displaying map views.
-    MapBox API
-  </div>
-  <div class="clear"></div>
-</row>
-
-<row>
-  <div class="tnum">
-    <b>Session 5:</b>
-  </div>
-  <div class="tdate">
-    &nbsp;<br/>
-    &nbsp;<br/>
-    <!--
-    <i>Friday<br/> Dec 11</br/> 7-9pm PST</i>
-    -->
-  </div>
-  <div>
-    Offline Storage with SQLite
-    MapBox API
-  </div>
-  <div class="clear"></div>
-</row>
-
-<row>
-  <div class="tnum">
-    <b>Session 6:</b>
-  </div>
-  <div class="tdate">
-    &nbsp;<br/>
-    &nbsp;<br/>
-    <!--
-    <i>Monday<br/> Dec 14<br/> 7-9pm PST</i>
-    -->
-  </div>
-  <div class="tdesc">
-    Geographical Tagging.
-    MapBox API
-  </div>
-  <div class="clear"></div>
-</row>
-
-<h4> Android Games </h4>
-
-<row>
-  <div class="tnum">
-    <b>Session 7:</b>
-  </div>
-  <div class="tdate">
-    &nbsp;<br/>
-    &nbsp;<br/>
-    <!--
-    <i>Wednesday, December 16. 7-9pm PST</i>
-    -->
-  </div>
-  <div class="tdesc">
-    Android for Games. Custom views and layouts.
-  </div>
-  <div class="clear"></div>
-</row>
-
-<row>
-  <div class="tnum">
-    <b>Session 8:</b>
-  </div>
-  <div class="tdate">
-    &nbsp;<br/>
-    &nbsp;<br/>
-    <!--
-    <i>Friday<br/> Dec 18<br/> 7-9pm PST.</i>
-    -->
-  </div>
-  <div class="tdesc">
-    Android for Games.
-  </div>
-  <div class="clear"></div>
-</row>
-
+<div class="section-syllabus">
 </div>
 
 <!-- ---------------------------------------------------------------------- -->
 
 <div class="section-mentors">
-
-<a name="mentors">
-<h3>
-About your mentors:
-</h3>
-</a>
-
-<section>
-  <div class="photo pull-left" >
-    <img src="images/paul.jpg" alt="Paul Pham" />
-  </div>
-  <div class="name_bio">
-    <p>
-    <b>Paul Pham</b>
-    is a teacher-entrepreneur who loves building communities around learning.
-    He has a Ph.D. in Computer Science from the University of Washington, and
-    an M.Eng and S.B. in Electrical Engineering and Computer Science at MIT.
-    He has been a software engineer at Amazon, an instructor at CodeFellows
-    and the University of Washington,
-    and a faculty member in Computer Science at The Evergreen State College.
-    </p>
-  </div>
-  <div class="clear"></div>
-</section>
-
-<section>
-  <div class="photo" >
-    <img src="images/adrian.jpg" alt="Adrian Laurenzi" />
-  </div>
-  <div class="name_bio" >
-    <p>
-      <b>Adrian Laurenzi</b>
-      has Bachelors of Science in Computer Science and Biology
-      from the University of Washington and has worked
-      for Socrata on mining civic datasets.
-      He is excited about both developing apps
-      with MapBox and getting away from computer
-      screens to be outdoors. He is
-      currently working on <a href="http://totago.co">TOTAGO</a>
-      (Turn Off The App and Go Outside), an app
-      for public transit hiking.
-    </p>
-  </div>
-  <div class="clear"></div>
-</section>
-
-<section>
-  <div class="photo" >
-    <img src="images/randy.jpg" alt="Randy Thedford" />
-  </div>
-  <div class="name_bio" >
-    <p>
-      <b>Randy Thedford</b>
-      develops Android apps for
-      <a href="http://bodybuilding.com">Bodybuilding.com</a>
-      and educational games. He also
-      teaches Android programming privately.
-      He has numerous apps on the Google Play store.
-    </p>
-  </div>
-  <div class="clear"></div>
-</section>
-
 </div>
 
 </script> <!-- #android-view -->
@@ -495,9 +183,76 @@ teaching style.
 
 <!-- Templates to be filled in! -->
 <script type="text/template" id="email-template">
+
+<div class="">
+<h3>Thank you</h3>
+
+<p>
+for signing up for our free workshop.
+</p>
+
+<p>
+Someone will email you soon to learn more about your
+Android programming goals
+and see how we can help you achieve.
+</p>
+
+<p>
+Our main workshop is online using Google Hangout-on-Air
+with screensharing, led by the unflappable Paul Pham.
+This allows us to use our main teaching technique,
+mob programming: everyone can talk and hear each other
+and see their screens, with the bonus of recording
+everything as a Youtube video for later reference.
+<p>
+
+<ul>
+<li>
+  <a href="http://www.meetup.com/Invisible-College/events/227464158/">Wednesday, January 6th, 6:30-8pm</a>
+</li>
+<li>
+  <a href="http://www.meetup.com/Invisible-College/events/227464161/">Wednesday, January 20th, 6:30-8pm</a>
+</li>
+</ul>
+
+
+<p>
+If you are in Seattle, we have two in-person
+workshops at Metrix:Createspace on the following
+dates led by the excellent Adrian Laurenzi.
+</p>
+
+<ul>
+<li>
+  <a href="http://www.meetup.com/Invisible-College/events/227464158/">Wednesday, January 6th, 6:30-8pm</a>
+</li>
+<li>
+  <a href="http://www.meetup.com/Invisible-College/events/227464161/">Wednesday, January 20th, 6:30-8pm</a>
+</li>
+</ul>
+
+</div>
+
 </script>
 
-<script type="text/template" id="projects-template">
+<script type="text/template" id="classes-template">
+  <row>
+    <header>
+      <a href="/#android">Robot Heart</a>
+    </header>
+    <p>A short course in writing Android apps.
+    </p>
+  </row>
+  <row>
+    <header>
+      <a href="/#web">Web the Middle Way</a>
+    </header>
+    <p>An intensive course to program for the web.
+    </p>
+  </row>
+</script>
+
+<script type="text/template" id="projects-template" src="projects.template">
   <row>
     <header>
       <a href="http://consider.it">Consider.It</a>
@@ -509,7 +264,7 @@ teaching style.
   </row>
   <row>
     <header>
-      <a href="http://stateb.us/">Statebus</a>
+      <a href="http://github.com/invisiblecollege/statebus/">Statebus</a>
     </header>
     <p>An elegant reactive web framework distributing state.</p>
   </row>
@@ -521,14 +276,16 @@ teaching style.
   </row>
   <row>
     <header>
-      <a href="/#android/">Robot Heart</a>
+      <a href="/#learn/">Learning</a>
     </header>
-    <p>A short course in Android programming.</p>
+    <p>We currently offer classes in programming
+    for the web and the Android mobile platform.</p>
   </row>
 
 </script>
 
 <script type="text/template" id="payment-template">
+
 </script>
 
 <script type="text/template" id="privacy-template">
@@ -603,14 +360,36 @@ teaching style.
 
 <!-- Statebus 3 code -->
   <script type="text/javascript">
+  // Global symbols needed by router below
+
   var statebus_version = 3;
   // My AWS instance
   var aws_ip='http://52.32.161.104';
+  var statebus_server = aws_ip+':45678';
+
   var email_url = aws_ip+'/email';
   $("form#signup").attr("action", email_url);
   var pay_url = aws_ip+'/stripe';
   $("form#stripe").attr("action", pay_url);
+
+  /*
+  var scr = document.createElement('script');
+  $("form#stripe").append(scr);
+
+  var ss = $("form#stripe script");
+  ss.attr("id", "stripe-button");
+  ss.attr("src", "https://checkout.stripe.com/checkout.js");
+  ss.attr("class", "stripe-button");
+  ss.attr("data-key", "pk_live_rigI562smH2C3dHSDdn257qv");
+  ss.attr("data-amount", "25000");
+  ss.attr("data-name", "Invisible College Android Class 1");
+  ss.attr("data-description", "8 sessions ($250.00)");
+  ss.attr("data-image", "/128x128.png");
+  ss.attr("data-locale", "auto");
+  */
+
   var statebus_server = aws_ip+':45678';
+
   //var statebus_server = 'http://stateb.us:3002'
   //var statebus_server = 'http://localhost:45678'
   </script>
