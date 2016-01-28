@@ -56,6 +56,7 @@ $(function() {
             routes: {
                 "projects": "projects",
                 "projects/:id": "projects",
+                "learn/": "learn",
                 "learn": "learn",
                 "android": "android",
                 "android/": "android",

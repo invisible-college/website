@@ -2,6 +2,27 @@
 // ----------
 define(['js/models'], function(models) {
 
+    addStripeButton = function() {
+        this.stripe_button = $('<script></script>').
+            attr('id', 'stripe-button').
+            attr('src', 'https://checkout.stripe.com/checkout.js').
+            attr('class', 'stripe-button').
+            attr('data-key', 'pk_live_rigI562smH2C3dHSDdn257qv').
+            attr('data-amount', '50000').
+            attr('data-name', 'Invisible College Android Class 1').
+            attr('data-description', '8 sessions ($500.00)').
+            attr('data-image', '/128x128.png').
+            attr('data-locale', 'auto');
+
+        // Create the stripe button
+        $("form#stripe").append(this.stripe_button);
+        var email_url = aws_ip+'/email';
+        $("form#signup").attr("action", email_url);
+        var pay_url = aws_ip+'/stripe';
+        $("form#stripe").attr("action", pay_url);
+    };
+
+
     var AndroidView = Parse.View.extend({
 
         el: "#main-content",
@@ -18,26 +39,6 @@ define(['js/models'], function(models) {
 
             this.render();
             console.log("Android Code " + this.code);
-        },
-
-        addStripeButton: function() {
-            this.stripe_button = $('<script></script>').
-                attr('id', 'stripe-button').
-                attr('src', 'https://checkout.stripe.com/checkout.js').
-                attr('class', 'stripe-button').
-                attr('data-key', 'pk_live_rigI562smH2C3dHSDdn257qv').
-                attr('data-amount', '50000').
-                attr('data-name', 'Invisible College Android Class 1').
-                attr('data-description', '8 sessions ($500.00)').
-                attr('data-image', '/128x128.png').
-                attr('data-locale', 'auto');
-
-            // Create the stripe button
-            $("form#stripe").append(this.stripe_button);
-            var email_url = aws_ip+'/email';
-            $("form#signup").attr("action", email_url);
-            var pay_url = aws_ip+'/stripe';
-            $("form#stripe").attr("action", pay_url);
         },
 
         render: function() {
@@ -65,7 +66,7 @@ define(['js/models'], function(models) {
                 function( data ) {
                     $("div.section-header").html(data);
                     // We can only call this after the form div has been loaded
-                    this.addStripeButton();
+                    addStripeButton();
                 });
 
 
