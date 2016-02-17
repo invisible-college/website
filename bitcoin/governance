@@ -1,0 +1,235 @@
+New Notes 2-16-2016
+===================
+
+**Abstract:** Bitcoin needs to be able to make decisions better.  We
+don't agree to a single process.  When people breach others'
+expectations, they get upset, and fight and low levels, which slows
+progress and disincentivizes development talent.
+
+We will succeed when
+ - Developers find it enjoyable to work
+ - Their work goes a long way
+
+Right now it's hard for developers to know if their changes will be accepted.
+
+One of bitcoin's biggest threats is ourselves.
+[cite [jim harper's report](https://bitcoinfoundation.org/wp-content/uploads/2014/07/Bitcoin-Risk-Management-Study-Spring-2014.pdf)
+fearing that a rift amongst developers would slow software development
+and lead to a hard fork.]
+
+**Abstract 2:**
+
+Bitcoin has a natural hierarchy of powers:
+ - **Development.** Have the power to write code.  The developers come
+    up with ideas, and want to make decisions together.  There are
+    multiple development teams.  They have the power to implement with
+    a release.  So the team has a concentration of power within the
+    developer category.
+ - **Mining.** But if they don't, the miners have to adjudicate.
+   There are multiple miners, and mining pools, and miners can move
+   their hashpower amongst the pools.
+ - **Trading.** If the miners make a bad decision, then the traders
+   will adjudicate, and choose an alternative coin.  Traders will need
+   an exchange to support the coin, so exchanges also have power,
+   similar to the power of pools.
+   - **Use?** Users are a subset of traders who, aquire some
+     currency for the purpose of actually using it.  However, they are
+     still traders.  They trade something to get the currency, and
+     then trade the currency for a good or server.
+
+This much isn't up for debate.  But we need to decide on how we will
+all work together, given these hard powers.
+
+Right now, these groups make decisions independently.  Bitcoin-Core
+has its own consensus process, and people get upset if you go outside
+of that process.
+
+**[example of adam back crying about consensus]**
+**[example of people saying that the "technical experts" in the developer
+community are against a change]**
+
+The miners make decisions for themselves, since they are independent
+operations, but recently have started talking more and more, both
+amongst one another, and amongst the developers.  They are innovators
+on their own individual operations, which they do independently
+because they are competing, but they also talk now that they are being
+asked to vote on consensus on protocol decisions.
+
+Traders watch everything happening and make judgement calls on which
+coins are gaining or losing value.  They talk on forums, often in
+small groups, but speak with their trades.
+
+**We don't need to change this natural order.  Our goal is to make
+  communication more efficient.** One problem is that some parties
+  don't see the legitimacy of others forces.  For example, developers
+  have said that a hard fork is being forced upon them without
+  consensus; however, on the contrary, mining pressure actually
+  creates consensus.  And miners have said that they want developers
+  to decide, even though they hold the power to vote by choosing which
+  fork to add their hashpower to—they are not accepting the power of
+  their hash.  Third, many do not accept the legitimacy of forking
+  code to make a change.  [cite maxwell, and others]
+
+Most of the action in protocol development happens at the top level,
+amongst the developers.  This is where we should focus our governance
+efforts.  Developers are free to write code for whatever purpose they
+want, but I am most interested in implementations that seek to
+maximize security and value.  I will here lay out a governance model
+for clients that want this.
+
+Developers will probably want to maximize for security, because that
+increases value.  And they will also want to maximize for use, because
+they want to see their ideas become realized.
+
+If you want to maximize security and value, then you want to optimize for 
+
+### The problem: Without an agreement on how to make decisions, we fall back to hard force, which is slow and painful.
+
+There's a consensus model in bitcoin-dev.  That wasn't enough, and we
+fell back onto hashpower voting.  People perceive this as a "hostile"
+fork, an act of "force".  A contentious hard-fork being forced upon
+them.
+
+But the other side sees no way forward.
+
+When a process breaks down, people descend to [lower levels of
+disagreement](http://paulgraham.com/disagree.html).
+
+![Graham's Hierarchy of Disagreement](https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Graham's_Hierarchy_of_Disagreement.svg/500px-Graham's_Hierarchy_of_Disagreement.svg.png)
+
+We see examples of this in:
+- 1.
+- 2.
+- 3.
+
+This drives away developers, who see the environment as "hostile":
+- [Mike hearn's post about hostile bitcoin-dev, and then him going away]
+
+### Slow and painful
+
+These lower levels are slow, because they are indirect.  This makes
+bitcoin adapt more slowly, which makes it less able to compete.
+
+And they are painful, which 
+
+## The solution
+
+When people get frustrated at a higher level, they descend to a lower
+level, because they see possibility there.  However, we don't want
+people to descend to name-calling.  We'd rather they descend to
+addressing miners or traders.
+
+The traders, for instance, should have discussion boards on what they
+want and what they will vote on.  If blocks go to 2MB, they should
+argue that all of bitcoin will be more valuable, and then convince one
+another, and back this up with their votes.
+
+The miners need an open channel of communication with devs, because
+they need to be talking directly with them.  And devs also need an
+open channel with traders.  Traders will be making bets on how the
+price will change, depending on the value of coinbase, etc.  Coinbase
+adds value to the economy, but some devs think coinbase is evil,
+e.g. because it's "a bank, not a wallet."
+
+
+The bitcoin governance process
+===========================
+
+We need to get people to agree to a process for making protocol
+decisions.  Debate would be more productive with an agreed process.
+
+A bunch of the problem was different people having different ideas of
+what the process was.  Adam Back was saying that we need consensus,
+amongst developers on the mailing list, but Satoshi stated the process
+differently when he said that miners can decide the rules by voting
+with their hashpower.  Then when people went with a fork, to vote with
+hashpower, Adam screamed fowl play, and got very upset.
+
+When people think others are breaking the rules, they break the rules
+back.  So then we had DDOS attacks.  And personal attacks, and
+character assassinations, and other gross punches below the belt,
+because there was no agreement on where the belt was.
+
+Theymos had his own ideas for process, which involved using moderation
+rules to enforce a single consensus process on a single forum.
+Unfortunately, most of us thought that censorship should not be a part
+of the process of debate.
+
+
+Requirements for the process design
+-----------------------------------
+
+Gavin wants:
+- Clear decision points
+- Clear ways to make decisions
+
+The VOTE: (let's debate this) Nature wants votes going to those who hold power:
+- Hashpower votes
+- Price goes up (can use markets to judge, and miners can judge)
+
+Gavin wants a way to rein in discussions so that they don't go on
+forever.  He notes that each IETF working group has a chair, who can
+decide that there has been enough debate on an issue, and there is now
+consensus in direction X or Y.
+
+However, that introduces central control in the decision of of when
+consensus has been reached.  That person might postpone declaring
+consensus, if he or a powerful minority doesn't like the consensus.
+For instance, Wlad could take that role in Core but he has not
+declared that there is consensus.  Our considerit approach, instead,
+is to let the crowd weigh in on a decision, and if a whole lot of
+people weigh in, then it's not very likely to change.  In addition, we
+can put up statistics saying the likelihood of a decision changing
+after N people have weighed in.
+
+Each project group can have a deadline for when they release features.
+These releases should be time-based.  And anything that's good enough
+at the feature-freeze point should be included in the release.
+
+Getting agreement on the process
+--------------------------------
+
+We can have people vote on considerit how they want the process to
+work.  This can end with a vote to use our process.
+
+We can pursuade people to use this process.
+
+- Persuade software repos to use it
+- Persuade miners to use it
+- Persuade businesses to use it
+- Persuade users to use it
+
+We should propose our process as a BIP, and also make it a considerit
+proposal.
+
+Maybe we should include all BIPs as considerit proposals too.
+
+
+The Powers Beneath
+=================
+
+### Miners
+
+Miners provide the security of the network, and are an immense display
+of strength.  They will be conservative, since they are miners, and
+their job is to pursue short-term profits.
+
+They want the Bitcoin price to rise, because they make money in
+Bitcoins from investments made in the past.  THe price of Bitcoin has
+a larger effect on their profits than most other factors.  But they
+also want high transaction fees, and things like efficiency (so that
+they can easily integrate bitcoin systems).
+
+But the the Bitcoin price is important, and it will be difficult for
+them alone to predict whether a change to the protocol will cause the
+price to increase or decrease.  So they will want strong signals of
+economic support, like you might get from a prediction market.
+
+A design
+--------
+
+- Immediate dev decisions care what miners will adopt.  These opinions can be on considerit.
+- Miners might look at the prediction market to see what users want
+
+
+

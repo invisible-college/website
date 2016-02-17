@@ -1,0 +1,121 @@
+<script type="statebus">
+
+# Develop your application in this script block!
+
+dom.BODY = ->
+
+  loc = fetch 'location'
+  homepage = loc.url == '/' || loc.url == ''
+
+  DIV
+    style:
+      padding: 50
+      fontSize: 18
+
+    if !homepage
+      DIV
+        style:
+          position: 'absolute'
+          top: 20
+          left: 20
+          cursor: 'pointer'
+          textDecoration: 'underline'
+
+        onClick: ->
+          Earl.load_page '/',
+            came_from_skill_section: true
+
+        'back home'
+
+    if homepage
+      HOMEPAGE()
+
+    else
+      RESUME()
+
+
+
+
+dom.HOMEPAGE = ->
+  DIV null,
+
+    DIV
+      style:
+        fontSize: 50
+
+      'Hello, I\'m Earl!'
+
+    DIV null,
+
+      'Click me to see what I can do'
+
+    A
+      href: '/what_i_do'
+
+      EARL()
+
+
+
+dom.RESUME = ->
+
+  links = [
+    A
+      href: "/"
+      target: '_blank'
+      "I can open internal links in a new tab"
+    A
+      href: 'https://invisible.college'
+      'I let external link open freely'
+    A
+      href: 'https://invisible.college'
+      target: '_blank'
+      "...especially external links that open a new tab"
+  ]
+
+  DIV null,
+    for l in links
+
+      DIV
+        style:
+          padding: 50
+
+        EARL
+          style:
+            width: 150
+            display: 'inline-block'
+            marginRight: 40
+
+        l
+
+    DIV
+      onClick: -> location.reload()
+
+      SPAN
+        style:
+          textDecoration: 'underline'
+          cursor: 'pointer'
+        'Reload the page'
+
+      ' and see that we return right back here'
+
+
+dom.EARL = ->
+
+  IMG
+    src: 'https://dl.dropboxusercontent.com/u/3403211/earl.jpg'
+    style: @props.style or {}
+
+
+Earl.start_work
+  history_aware_links: true
+  root: '/earl-demo.html'
+
+#</script><script>
+  var statebus_client = "https://stateb.us/client.js"
+  document.write( '<script src="' + statebus_client + '" charset="utf-8"><\/script>')
+
+  var earldir = "https://rawgit.com/invisible-college/Earl/master/"
+  //var earldir = "../"
+  document.write( '<script src="' + earldir + 'earl.js' + '" charset="utf-8"><\/script>')
+
+</script>

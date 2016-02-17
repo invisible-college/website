@@ -1,0 +1,14 @@
+<script type="statebus">
+dom.BODY = ->
+  loc = fetch('location')
+  console.log(loc)
+  code = fetch('/code/invisible.college' + window.location.pathname.slice(0,-5)).code
+  DIV(dangerouslySetInnerHTML: __html: marked(code))
+
+Earl.start_work
+  history_aware_links: true
+  root: '/code.html'
+
+#</script><script src="https://stateb.us/client.js"></script>
+<script src="https://cdn.rawgit.com/invisible-college/Earl/0.1/earl.js"></script>
+<link rel="stylesheet" href="/css/github-markdown.css">
