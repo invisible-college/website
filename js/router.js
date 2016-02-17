@@ -61,6 +61,7 @@ $(function() {
                 "android": "android",
                 "android/": "android",
                 "android/:code": "android",
+                "android/class/:id": "androidClass",
                 "web": "web",
                 "web/": "web",
                 "web/:code": "web",
@@ -106,6 +107,21 @@ $(function() {
                 console.log("Android code: " + code);
                 new AndroidView(code);
             },
+
+            /* Handle prices and promotional codes here */
+            androidClass: function(id) {
+                localSave({
+                    "key": "view",
+                    "view": "android"
+                });
+                localSave({
+                    "key": "/android/code",
+                    "view": "code"
+                });
+                console.log("Android class ID: " + id);
+                new AndroidClassView(id);
+            },
+
 
             learn: function() {
                 localSave({

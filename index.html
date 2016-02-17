@@ -53,24 +53,19 @@
     fbq('track', 'ViewContent');
   </script>
 
-<div class="masthead clearfix">
-  <div class="inner">
-    <h3 class="masthead-brand">Invisible College</h3>
-    <nav>
-      <ul class="nav masthead-nav">
-        <!--<li class=""><a href="/">Home</a></li> -->
-        <!-- <li class="active"><a href="/mission">Mission</a></li> -->
-        <!-- <li class="active"><a href="/mission">Meetups</a></li> -->
-        <li class=""><a href="#members">Members</a></li>
-        <li class=""><a href="#about">About</a></li>
-      </ul>
-    </nav>
-  </div>
-</div>
 
 <!-- Outer class has a healthy top margin to duck under navbar
      and views will be rendered here. -->
-<div class="outer">
+<div>
+  <div class="inner content hero" style="padding: 20px; margin-bottom: 50px; font: 18px 'Muli', sans-serif">
+    <div style="font-weight: bold; font-size: 1.2em">Invisible College</div>
+    <div style="color: #B7B8BF">
+      <!--A distributed research lab and social school.-->
+      A distributed research lab and social school.
+      <!--Learn and create.-->
+    </div>
+  </div>
+
   <div class="inner content cover hero" id="main-content">
   </div>
 </div>
@@ -105,34 +100,6 @@ dom.BODY = ->
           project.name
 
 </script>
-<!-- Example of a new HTML section -->
-<!--
-<div class="outer">
-<div class="inner content cover hero">
-  <h1 class="cover-heading">Livecoding Streams</h1>
-  <h2>Next up</h2>
-  <p><b>Adrian Laurenzi</b> and <b>Paul Pham</b> collaborate on a hitchhiking / ridesharing
-  Android app, using MapBox. </p>
-  <p><em>
-  Tuesday, December 1st, 9:30pm PST
-  </p></em>
-</div>
-</div>
--->
-
-<!--
-<div class="container-fluid section-title" id="robot-heart-01">
-  <div class="container">
-    <h2>
-      <span id="title"></span>
-      <span id="subtitle">An adventure in Java and Android</span>
-    </h2>
-    <p class="moral">An interactive video chat course to write mobile apps.</p>
-    <p class="fable">November 30th - December 16th, 2015
-    </p>
-  </div>
-</div>
--->
 
 <script type="text/template" id="class-template">
 
@@ -257,31 +224,33 @@ dates led by the excellent Adrian Laurenzi.
     <header>
       <a href="http://consider.it">Consider.It</a>
     </header>
-    <p>A platform for online decision-making that
-       powers
-       <a href="livingvotersguide.org">The Living Voters Guide.</a>
+    <p style="margin-top: 0">Deliberation and opinion visualization for focused discussion on the web.
     </p>
   </row>
   <row>
     <header>
-      <a href="http://github.com/invisiblecollege/statebus/">Statebus</a>
+      <a href="https://github.com/invisible-college/statebus">Statebus</a>
     </header>
-    <p>An elegant reactive web framework distributing state.</p>
+    <p style="margin-top: 0">Reactive web protocol for distributing state.</p>
   </row>
   <row>
     <header>
-      <a href="http://cheeseburgertherapy.com/">Cheeseburger Un-therapy</a>
+      <a href="http://cheeseburgertherapy.com/">Cheeseburger Therapy</a>
     </header>
-    <p>Peer-to-peer therapy over the web, by and for everyday people.</p>
+    <p style="margin-top: 0">Peer-to-peer therapy over the web, by and for everyday people.</p>
   </row>
   <row>
     <header>
       <a href="/#learn">Learning</a>
     </header>
-    <p>We currently offer classes in programming
-    for the web and the Android mobile platform.</p>
+    <p style="margin-top: 0">Socially-engaging, project-based classes in programming and technology.</p>
   </row>
-
+  <row>
+    <header>
+      <a href="https://toom.im">Toomim Bros. Bitcoin Mining Concern, LTD</a>
+    </header>
+    <p style="margin-top: 0">Datacenters that let independents mine bitcoin profitably.</p>
+  </row>
 </script>
 
 <script type="text/template" id="payment-template">
