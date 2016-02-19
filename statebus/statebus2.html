@@ -2,47 +2,72 @@
   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
   <body class="hyphenate">
 
-<h1>Statebus</h1>
-<i><a href="mailto:toomim@gmail.com">Michael Toomim</a> and the <a href="http://invisible.college">Invisible College</a></i>
-<abstract>
-    Anyone can add a website to the open web, but the insides of
-    websites are closed.  Statebus extends the web protocol to the
-    insides of websites, by giving each piece of internal state a URL,
-    and making servers promise to update their clients automatically
-    when state changes.  These protocol changes enable a new
-    programming architecture that simplifies programming with
-    distributed state and unifies client and server.  This makes it
-    both easier to develop the internals of a website, while
-    simultaneously making it easier to share the internals with other
-    websites.
-</abstract>
+  <center style="margin-top: 50px">
+      <h1>Statebus</h1>
+      <i><a href="mailto:toomim@gmail.com">Michael Toomim</a></i>
+  </center>
 
+<abstract>
+    HTTP gives every web <i>page</i> an openly addressable URL, but
+    websites encapsulate their internal <i>state</i> behind custom
+    APIs.  Statebus allows ______ __ _______ by extending HTTP in three ways.
+    First, it gives each piece of internal state a URL. Second, it allows
+    any state to depend upon any other state.  Third, it provides a
+    guarantee that all fetched state will automatically update when
+    their dependencies change.  This makes it easier to develop
+    websites, and encourages sharing state across websites and other
+    computers.
+</abstract>
 
   Statebus makes three extensions to HTTP:
   <ol>
-    <li>Each piece of <i>state</i> has a URL and a standard format, not just every <i>page</i>.
-    <li>A piece of state can <i>contain</i> other linked pieces of state, that are fetched along with it
-    <li>Each state is automatically promised to be <i>updated</i> when changed, not just <i>transferred</i>.
+    <li>Each piece of <i>state</i> has a URL, not just each <i>page</i> (or file).
+    <li>A piece of state can <i>depend</i> on other pieces of state, with <i>links</i> to their URLs
+    <li>Each state is automatically promised to be <i>updated</i> when it or its dependencies change
   </ol>
 
-  These three changes
+  These three changes let you construct websites out of many layers of
+  state that are interdependent, and all update together,
+  automatically, even across other websites, over the network, or
+  anywhere, as long as they obey the statebus protocol.
+
+  <p>And we can build a whole website as a set of reactive
+  layers.  <i>Using</i> the web protocol, rather
+  than <i>implementing</i> the web protocol on the outside with a
+  bunch of proprietary gunk on the inside.
+
+  <p><img src="images/stack3.svg" width="700">
+
+  <p>Each of these black circles is a piece of state.  For instance,
+  each <i>controller</i> in Rails returns a piece of JSON state, which
+  depends on the state of a <i>model</i>, which depends on the state
+  of the database.  In Rails, you'd use a different API for a
+  controller than you would for a model.  But with statebus, each
+  piece of state has a uniform interface; each has URL, and each
+  depends on the state below, linked with black lines in the diagram.
+
+  <h2>Examples</h2>
+    
+  <p>Let's start at the top of the stack, and make a page that renders from state.
+  <p><i>[bloggy example]</i>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Statebus</title>
+  <link rel="stylesheet" href="css" type="text/css"/>
+  <link rel="stylesheet" href="equity-b.css" type="text/css"/>
+  <link rel="stylesheet" media="(-webkit-min-device-pixel-ratio: 2)" href="equity-a.css" type="text/css"/>
+  <link rel="stylesheet" href="computer modern/Serif/cmun-serif.css"/>
+  <link rel="stylesheet" href="computer modern/Bright/cmun-bright.css"/>
+  <link rel="stylesheet" href="computer modern/Concrete/cmun-concrete.css"/>
+  <link rel="stylesheet" href="computer modern/Sans/cmun-sans.css"/>
+  <link rel="stylesheet" href="computer modern/Typewriter/cmun-typewriter.css"/>
+  <link rel="stylesheet" href="computer modern/Upright Italic/cmun-upright-italic.css"/>
+  <script type="text/javascript" src="hyphenator.js"></script>
+  <script type="text/javascript" src="hyphenator-english.js"></script>
+  <script type="text/javascript">Hyphenator.run();</script>
+  <script src="https://stateb.us/client.js"></script>
+  <!--<script src="file:///Users/toomim/Dropbox/projects/statebus/npms/git/client.js"></script>-->
+  <script type="statebus">bus.live_reload_from('invisible.college')</script>
 
   </body>
-
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Statebus</title>
-    <link rel="stylesheet" href="css" type="text/css"/>
-    <link rel="stylesheet" href="equity-b.css" type="text/css"/>
-    <link rel="stylesheet" media="(-webkit-min-device-pixel-ratio: 2)" href="equity-a.css" type="text/css"/>
-    <link rel="stylesheet" href="computer modern/Serif/cmun-serif.css"/>
-    <link rel="stylesheet" href="computer modern/Bright/cmun-bright.css"/>
-    <link rel="stylesheet" href="computer modern/Concrete/cmun-concrete.css"/>
-    <link rel="stylesheet" href="computer modern/Sans/cmun-sans.css"/>
-    <link rel="stylesheet" href="computer modern/Typewriter/cmun-typewriter.css"/>
-    <link rel="stylesheet" href="computer modern/Upright Italic/cmun-upright-italic.css"/>
-    <script type="text/javascript" src="hyphenator.js"></script>
-    <script type="text/javascript" src="hyphenator-english.js"></script>
-    <script type="text/javascript">Hyphenator.run();</script>
-  </head>
 </html>

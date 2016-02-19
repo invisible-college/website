@@ -132,6 +132,50 @@ adds value to the economy, but some devs think coinbase is evil,
 e.g. because it's "a bank, not a wallet."
 
 
+Crowd Defines the Groups 2-17-2016
+====================
+
+The main issue at hand is how to do protocol forks/upgrades.  We only
+want to try to fork once we've got the network's consensus.
+
+### The problem has been that nobody can define consensus.  People cry foul when there's forking without consensus, but there's no way to determine consensus without a fork.
+
+I've been trying to define consensus in 3 clean groups:
+- devs
+- miners
+- traders
+
+...but in reality, miners are also traders.  And wallet makers I guess
+are devs... but there are also business people, and there are
+regulators, and all of those people's opinions might matter, and we
+can't define all the people who matter up front.
+
+A more general approach is for the community to define what matters,
+making its own groups (e.g. "wallets"), and then other people can cite
+them and reference them.
+
+This way, each client code can define the constituencies that they
+believe matter, citing the groups that they think are well-defined.
+Then you can trust a client, and the client can trust a group... which
+trusts the opinion of people...
+
+Also, right now we don't have critical mass of developer talent.
+There aren't enough people working on the code.  It's kind of amazing
+that we have so much value held in bitcoin with such shallow code.
+
+From individuals, to weights, to groups
+=====================
+
+- Jonathan should be able to weight his own people.  Then he'll build
+  toward those people.
+- Then other people can weight their people.
+- Then people can create groups of people, and view the weights of all
+  group memebrs composed together
+  - You can see all miners' opinions
+  - And then see the weighted opinions of the people the miners respect
+  - You can view Bitcoin Classic developers
+
+
 The bitcoin governance process
 ===========================
 
