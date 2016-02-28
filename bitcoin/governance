@@ -163,18 +163,6 @@ Also, right now we don't have critical mass of developer talent.
 There aren't enough people working on the code.  It's kind of amazing
 that we have so much value held in bitcoin with such shallow code.
 
-From individuals, to weights, to groups
-=====================
-
-- Jonathan should be able to weight his own people.  Then he'll build
-  toward those people.
-- Then other people can weight their people.
-- Then people can create groups of people, and view the weights of all
-  group memebrs composed together
-  - You can see all miners' opinions
-  - And then see the weighted opinions of the people the miners respect
-  - You can view Bitcoin Classic developers
-
 
 The bitcoin governance process
 ===========================
@@ -203,13 +191,11 @@ of the process of debate.
 Requirements for the process design
 -----------------------------------
 
+### Clear decision points
+
 Gavin wants:
 - Clear decision points
 - Clear ways to make decisions
-
-The VOTE: (let's debate this) Nature wants votes going to those who hold power:
-- Hashpower votes
-- Price goes up (can use markets to judge, and miners can judge)
 
 Gavin wants a way to rein in discussions so that they don't go on
 forever.  He notes that each IETF working group has a chair, who can
@@ -229,6 +215,39 @@ after N people have weighed in.
 Each project group can have a deadline for when they release features.
 These releases should be time-based.  And anything that's good enough
 at the feature-freeze point should be included in the release.
+
+### Reflects natural powers
+
+The VOTE: (let's debate this) Nature wants votes going to those who hold power:
+- Hashpower votes
+- Price goes up (can use markets to judge, and miners can judge)
+
+
+### Decisions made by people with the information
+
+We also want each decision to be made by the people with the right
+information for making it.  Communism failed partially because people
+lacked incentives, but from Herb Simon's perspective because the
+information wasn't in the hands of the right people.  You can see a
+similar problem in bitcoin—the developers don't talk with the miners
+and users.  Then they have to make a decision on the blocksize limit
+but don't know what's best.  They don't want to make a bad decision.
+The miners don't want to make a bad decision on the protocol either,
+and they don't have expertise for all aspects of it.  They want to be
+able to trust somebody.  Gavin wants to know who somebody is before he
+listens to them.
+
+We could address these by filtering votes to the people with expertise
+on topics, and also by punishing people for giving naïve opinions.
+One way to punish them is to see if they are saying things that are
+wrong, like a pro/con point that the crowd points out is incorrect.
+You can also weight up people's opinions that give pro/cons that stand
+up to the crowd's votes.
+
+#### Getting the right information
+
+We could also try to incentivize research to get information, like
+Jonathan did with testnet experiments.
 
 Getting agreement on the process
 --------------------------------
@@ -276,4 +295,42 @@ A design
 - Miners might look at the prediction market to see what users want
 
 
+
+From individuals, to weights, to groups
+=====================
+
+- Jonathan should be able to weight his own people.  Then he'll build
+  toward those people.
+- Then other people can weight their people.
+- Then people can create groups of people, and view the weights of all
+  group memebrs composed together
+  - You can see all miners' opinions
+  - And then see the weighted opinions of the people the miners respect
+  - You can view Bitcoin Classic developers
+
+The view from above
+---------------------
+
+We want to have a "classic devs opinions" view, and "miner's opinions"
+and "core devs opinions" and "silicon valley's opinions" views.  And
+wallets, and exchanges.  That way you can see what the different
+groups think.
+
+There can be multiple versions of each group, and they can be "vouched
+for" by people.  You can read that person's version of the group to
+see how they think the weights fall.  You can choose the one with the
+most people vouching for it... or you can choose a different one if
+you prefer.
+
+A group is: **A set of weights on people**
+
+Whenever a user rates people, he does so w.r.t. a group tag.  You can
+see a particular user's group ratings, or the average group ratings
+for a group tag, or make a meta-group, composed of weights on other
+peoples' group weights.
+
+**Classic would do:**
+- Set up a weighted list of miners by hashpower and host on aws
+- Make a list of classic people and average their weights on voters to
+  make the group for non-miners classic votes
 

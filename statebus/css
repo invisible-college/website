@@ -4,6 +4,7 @@ body {
     font-size: 14pt;
     text-align: justify;
     max-width: 720px;
+    min-width: 650px;
     line-height: 1.5;
     line-height: 1.3;
     margin-left: auto;
@@ -12,6 +13,17 @@ body {
     -webkit-font-feature-settings: 'liga' 1;
     -moz-font-feature-settings: 'liga' 1;
 }
+
+/*@media (max-width: 400px) {
+    body {
+        text-align: justify;
+        line-height: 1.5;
+        line-height: 1.3;
+        background-color: #fbfbfc;
+        -webkit-font-feature-settings: 'liga' 1;
+        -moz-font-feature-settings: 'liga' 1;
+    }
+}*/
 
 img { max-width: 750px; }
 
@@ -28,13 +40,19 @@ author {
     
 }
 
-kbd, tt, pre {
+kbd, tt, pre, code {
     font-size: 12pt;
     font-family: Inconsolata, Computer Modern Typewriter, Monaco, monospace;
 }
 
 concrete, conc {
     font-family: Computer Modern Concrete;
+}
+
+.codeblock {
+    margin: 20px;
+    padding: 20px;
+    background-color: #eee;
 }
 
 h1 {
@@ -65,3 +83,4 @@ h4 {
 a {
     color: #222;
 }
+
