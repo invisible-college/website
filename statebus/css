@@ -1,0 +1,86 @@
+/* -*- mode: css -*- */
+body {
+    font-family: equity-text, Computer Modern Serif;
+    font-size: 14pt;
+    text-align: justify;
+    max-width: 720px;
+    min-width: 650px;
+    line-height: 1.5;
+    line-height: 1.3;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #fbfbfc;
+    -webkit-font-feature-settings: 'liga' 1;
+    -moz-font-feature-settings: 'liga' 1;
+}
+
+/*@media (max-width: 400px) {
+    body {
+        text-align: justify;
+        line-height: 1.5;
+        line-height: 1.3;
+        background-color: #fbfbfc;
+        -webkit-font-feature-settings: 'liga' 1;
+        -moz-font-feature-settings: 'liga' 1;
+    }
+}*/
+
+img { max-width: 750px; }
+
+abstract {
+    padding: 60px 80px;
+    /*font-style: italic;*/
+    display: block;
+}
+abstract:before {
+    content: "Abstract. ";
+    font-weight: bold;
+}
+author {
+    
+}
+
+kbd, tt, pre, code {
+    font-size: 12pt;
+    font-family: Inconsolata, Computer Modern Typewriter, Monaco, monospace;
+}
+
+concrete, conc {
+    font-family: Computer Modern Concrete;
+}
+
+.codeblock {
+    margin: 20px;
+    padding: 20px;
+    background-color: #eee;
+}
+
+h1 {
+    font-size: 4.5em;
+    margin-bottom: 0;
+    padding-bottom: 0;
+    margin-top: 0;
+    padding-top: 0;
+}
+
+h2 {
+    margin-top: 14px;
+    padding-top: 0;
+    margin-bottom: 0em;
+    font-family: sans-serif;
+    font-size: 24px;
+}
+
+h3 {
+    font-weight: 500;
+    font-family: sans-serif;
+}
+
+h4 {
+    font-family: sans-serif;
+}
+
+a {
+    color: #222;
+}
+

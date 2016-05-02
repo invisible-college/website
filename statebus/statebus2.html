@@ -1,0 +1,144 @@
+<html lang="en">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <body class="hyphenate">
+
+  <center style="margin-top: 50px">
+      <h1>Statebus</h1>
+      <i><a href="mailto:toomim@gmail.com">Michael Toomim</a></i>
+  </center>
+
+<abstract>
+    <conc>HTTP</conc> gives every web <i>page</i> an openly
+    addressable <conc>URL</conc>, but websites encapsulate their
+    internal <i>state</i> behind custom APIs.  <conc>Statebus</conc>
+    allows ______ __ _______ by extending <conc>HTTP</conc> in three
+    ways.  First, it gives each piece of internal state
+    a <conc>URL.</conc> Second, it allows any state to depend upon any
+    other state.  Third, it provides a guarantee that all fetched
+    state will automatically update when its dependencies change.
+    This makes it easier to develop websites, and encourages sharing
+    state across websites and other computers.
+</abstract>
+
+  <conc>Statebus</conc> makes three extensions to <conc>HTTP</conc>:
+  <ol>
+    <li>Each piece of <i>state</i> has a <conc>URL</conc>, not just each <i>page</i> (or file).
+    <li>A piece of state can <i>depend</i> on other pieces of state, with <i>links</i> to their <conc>URL</conc>s
+    <li>Each state is automatically promised to be <i>updated</i> when it or its dependencies change
+  </ol>
+
+  These three changes let you construct websites out of many layers of
+  state that are interdependent, and all update together,
+  automatically, even across other websites, over the network, or
+  anywhere, as long as they obey the <conc>statebus</conc> protocol.
+
+  <p>And we can build a whole website as a set of reactive
+  layers.  <i>Using</i> the web protocol, rather
+  than <i>implementing</i> the web protocol on the outside with a
+  bunch of proprietary gunk on the inside.
+
+  <p><img src="images/stack3.svg" width="700">
+
+  <p>Each of these black circles is a piece of state.  For instance,
+  each <i>controller</i> in Rails returns a piece of <conc>JSON</conc>
+  state, which depends on the state of a <i>model</i>, which depends
+  on the state of the database.  In Rails, you'd use a different API
+  for a controller than you would for a model.  But with statebus,
+  each piece of state has a uniform interface; each
+  has <conc>URL</conc>, and each depends on the state below, linked
+  with black lines in the diagram.
+
+  <h2>Examples</h2>
+    
+  <p>Let's start at the top of the stack, and make a page that renders
+  from state.  We've written a handy single-file programming system,
+  because statebus lets you decouple nodes of state.  Here we have
+  implemented a whole blog web app within a single <conc>html</conc>
+  file, decoupled from a server.
+
+  <pre class="codeblock">&lt;script type="statebus"&gt;
+
+dom.BODY = ->
+  blog = fetch('state://stateb.us/&lt;yourname&gt;/blog')
+  DIV
+    for post in blog.posts
+      DIV
+        H1 post.title
+        DIV post.body
+
+#&lt;/script>&lt;script src="https://stateb.us/client.js"&gt;&lt;/script&gt;
+</pre>
+
+  <p><conc>Statebus</conc> is backwards-compatible
+  with <conc>HTTP</conc>, and we have implemented a number of wrappers
+  to make compatibility consistent.  The first and last lines are a
+  wrapper that lets you implement a whole statebus web app within a
+  single <conc>html</conc> file, decoupled from a server.
+
+  <p>If you put this into a <code>.html</code> file on your laptop,
+  and then double-click it to open in a web browser (you'll see
+  a <code>file:///</code> <conc>URL</conc>), you'll see a
+  working <conc>statebus</conc> blog, in a single <conc>html</conc>
+  file!
+
+  <p>It'll be empty until you add some content though.  Open your
+  browser's <conc>console</conc> and run:
+
+<pre class="codeblock">
+save({
+  key: 'state://stateb.us/&lt;yourname&gt;/blog',
+  posts: [{title: 'hello', body: 'world'}]
+})
+</pre>
+
+  <p>Notice how the app automatically updated as soon as you ran that
+  line?  And reload the page, now you'll see it persists.  That state
+  is saved to the
+  <conc>URL</conc> <code>state://stateb.us/&lt;yourname&gt;/blog</code>,
+  and will persist as you reload.  And if there are other people
+  saving that state, you'll all share the same state since you share
+  that <conc>URL</conc>, and see each change to same state together
+  simultaneously.
+
+
+  <h2>Diff/Patch API</h2>
+
+  <p>The differential synchronization <conc>API</conc> can be just a simple extension to the
+  current <conc>API</conc>. You can register a normal reactive
+  function like you do now, which won't receive diffs. It'll receive
+  the new state.
+
+  <p>To receive diffs, we'll make a new <conc>API</conc> that lets you
+    register handlers for each type of diff event:
+
+    <pre class="codeblock">hash.change(from, to)
+array.change(start, end, replace_with)
+string.change(start, end, replace_with)</pre>
+
+  <P>We could also add <conc>move</conc> operations.
+
+  <p>If there is a handler registered for diff operations on a piece
+  of state, then statebus will automatically know to hold onto a
+  shadow copy of that state, and diff it every time there's an update
+  in order to send out the patch operations to the registered handler.
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Statebus</title>
+  <link rel="stylesheet" href="css" type="text/css"/>
+  <link rel="stylesheet" href="equity-b.css" type="text/css"/>
+  <link rel="stylesheet" media="(-webkit-min-device-pixel-ratio: 2)" href="equity-a.css" type="text/css"/>
+  <link rel="stylesheet" href="computer modern/Serif/cmun-serif.css"/>
+  <link rel="stylesheet" href="computer modern/Bright/cmun-bright.css"/>
+  <link rel="stylesheet" href="computer modern/Concrete/cmun-concrete.css"/>
+  <link rel="stylesheet" href="computer modern/Sans/cmun-sans.css"/>
+  <link rel="stylesheet" href="computer modern/Typewriter/cmun-typewriter.css"/>
+  <link rel="stylesheet" href="computer modern/Upright Italic/cmun-upright-italic.css"/>
+  <script type="text/javascript" src="hyphenator.js"></script>
+  <script type="text/javascript" src="hyphenator-english.js"></script>
+  <script type="text/javascript">Hyphenator.run();</script>
+  <script src="https://stateb.us/client.js"></script>
+  <!--<script src="file:///Users/toomim/Dropbox/projects/statebus/npms/git/client.js"></script>-->
+  <script type="statebus">bus.live_reload_from('invisible.college')</script>
+
+  </body>
+</html>
