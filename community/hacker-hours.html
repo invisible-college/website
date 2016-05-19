@@ -1,0 +1,125 @@
+<script type="statebus">
+dom.BODY = ->
+
+  DIV
+    style:
+      textAlign: 'left'
+      padding: '20px'
+      marginBottom: '50px'
+      font: "18px 'Muli', sans-serif"
+
+    DIV
+      style:
+        fontWeight: 'bold'
+        fontSize: '1.5em'
+      'Hacker Hours'
+
+    DIV
+      style:
+        color: "#B7B8BF"
+      'Free programming help in Seattle and online, any language, any skill level.'
+
+    DIV
+      style:
+        fontSize: '2em'
+      "Hacker Hours 37"
+
+      DIV
+        style:
+          fontStyle: "italic"
+        "Wednesday, 18 May 2016, 18:30 - 20:30 PDT"
+
+      DIV 
+        style: null
+        DIV
+          style:
+            fontSize: '0.5em'
+          "Paul Pham"
+        A
+          href: "/community/paulpham.html"
+          IMG
+            src: "https://pbs.twimg.com/profile_images/682448363447398401/5UP_8t0Y.png"
+            width: "100px"
+            height: "100px"
+
+</script>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="icon" href="http://invisible.college/favicon.ico">
+
+  <title>Invisible College</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Google Fonts from femmebot.github.io/google-type -->
+
+  <!-- Google web fonts for "The Astronomer" -->
+  <link href='https://fonts.googleapis.com/css?family=Megrim|Roboto+Slab:300' rel='stylesheet' type='text/css'>
+
+  <!-- Google web fonts for "The River" -->
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:800|Gentium+Basic:400,400italic' rel='stylesheet' type='text/css'>
+
+  <link href='https://fonts.googleapis.com/css?family=Ovo|Muli:300' rel='stylesheet' type='text/css'>
+
+  <!-- Custom styles for this template -->
+  <link href="css/cover.css" rel="stylesheet">
+  <!--<link href="css/google-type.css" rel="stylesheet">-->
+
+</head>
+
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+
+<!-- Statebus 3 code -->
+  <script type="text/javascript">
+  // Global symbols needed by router below
+
+  var statebus_version = 3;
+  // My AWS instance
+  var aws_ip='http://52.32.161.104';
+  var statebus_server = aws_ip+':45678';
+
+  var email_url = aws_ip+'/email';
+  $("form#signup").attr("action", email_url);
+  var pay_url = aws_ip+'/stripe';
+  $("form#stripe").attr("action", pay_url);
+
+  /*
+  var scr = document.createElement('script');
+  $("form#stripe").append(scr);
+
+  var ss = $("form#stripe script");
+  ss.attr("id", "stripe-button");
+  ss.attr("src", "https://checkout.stripe.com/checkout.js");
+  ss.attr("class", "stripe-button");
+  ss.attr("data-key", "pk_live_rigI562smH2C3dHSDdn257qv");
+  ss.attr("data-amount", "25000");
+  ss.attr("data-name", "Invisible College Android Class 1");
+  ss.attr("data-description", "8 sessions ($250.00)");
+  ss.attr("data-image", "/128x128.png");
+  ss.attr("data-locale", "auto");
+  */
+
+  //var statebus_server = aws_ip+':45678';
+
+  var statebus_server = 'https://stateb.us:3003'
+  //var statebus_server = 'http://localhost:45678'
+  </script>
+  <!-- Router to extract URL parameters -->
+  <!--
+  <script src="js/router.js"></script>
+  -->
+  <script src="js/util.js"></script>
+  <!-- route first to set the view, then parse statebus -->
+  <script src="https://stateb.us/client.js"></script>
+
+</body>
+</html>
