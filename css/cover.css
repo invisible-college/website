@@ -334,3 +334,44 @@ input[type=text], textarea {
   width: 200px;
   margin: 5px;
 }
+
+.eventBanner {
+  background-color: #5F5A60;
+  color: #CF6A4C;
+  font-size: 24px;
+  border: #7587A6 5px solid;
+  padding: 20px;
+  margin: 20px;
+}
+
+.darkGray {
+  background-color: #5F5A60;
+}
+
+.grapefruit {
+  background-color: #CF6A4C;
+}
+
+.brown {
+  background-color: #9B703F;
+}
+
+.beige {
+  background-color: #CDA869;
+}
+
+.mauve {
+  background-color: #9B859D;
+}
+
+.blueGray {
+  background-color: #7587A6;
+}
+
+.oliveDrab {
+  background-color: #8F9D6A;
+}
+
+.goldenHay {
+  background-color: #F9EE98;
+}
