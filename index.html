@@ -26,10 +26,21 @@ dom.BODY = ->
         desc: "Datacenters that let independents mine bitcoin profitably."
       },
       {
-        name: "Invisible School",
-        url: ""
-        desc: "Learn to think and work with code, transparently and in a freeform mental playground."
-      }
+        name: "Invisible Loft NYC",
+        url: "http://invisible.college/nyc"
+        desc: "An arcology for co-living and co-learning in Brooklyn, New York"
+      },
+      {
+        name: "Meetups and Community",
+        url: "http://invisible.college/community"
+        desc: "Come to a meetup and hack with us."
+      },
+      /*
+      {
+	name: "Invisible School",
+	url: ""
+	desc: "Learn to think and work with code, transparently and in a freeform mental playground"
+	}*/
     ]
     save(projects)
     console.log("Saving empty projects")
@@ -40,6 +51,7 @@ dom.BODY = ->
       padding: '20px'
       marginBottom: '50px'
       font: "18px 'Muli', sans-serif"
+      background-color: 'rgba(0,0,0,0.7)'
     DIV
       style:
         fontWeight: 'bold'
@@ -48,7 +60,7 @@ dom.BODY = ->
     DIV
       style:
         color: "#B7B8BF"
-      'A distributed research lab and social school.'
+      'A distributed research lab and school.'
 
     projects.list.map (project) ->
       DIV
@@ -76,9 +88,6 @@ dom.BODY = ->
 
   <title>Invisible College</title>
 
-  <!-- Bootstrap core CSS -->
-  <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
-
   <!-- Google Fonts from femmebot.github.io/google-type -->
 
   <!-- Google web fonts for "The Astronomer" -->
@@ -91,7 +100,6 @@ dom.BODY = ->
 
   <!-- Custom styles for this template -->
   <link href="css/cover.css" rel="stylesheet">
-  <!--<link href="css/google-type.css" rel="stylesheet">-->
 
 </head>
 

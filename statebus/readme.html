@@ -5,4 +5,10 @@ dom.BODY = ->
 
 #</script><script src="https://stateb.us/client.js"></script>
 <script src="/js/marked.min.js"></script>
+<script src="/js/highlight.pack.js"></script>
+<link rel="stylesheet" href="/js/highlight-default.css">
+<script>marked.setOptions({highlight: function (code, lang) {
+try { return hljs.highlight(lang, code, true).value } catch (e) {}
+return hljs.highlightAuto(code).value
+}})</script>
 <link rel="stylesheet" href="/css/github-markdown.css">

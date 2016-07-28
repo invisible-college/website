@@ -1,2 +1,464 @@
-# Statebus
+# Some Statebus v4 Docs
 
+## Make a Blog
+
+### A Blog (client)
+
+(Show a basic blog)
+
+Save the blog to the server with save()
+
+Include an iframe here
+
+### Server
+
+Then we want to add access control.  Need a server.
+
+Show the server code for adding access control
+
+
+Then the rest of this can be the full API documentation.
+
+# API
+
+## Install
+#### Client Installation
+
+You want the main script at the top, because it'll give you line numbers when
+there are errors, and then the other thing at the bottom.
+
+```coffeescript
+<script type="statebus">
+
+dom.BODY = -> DIV 'Hello, World!'
+
+</script><script src="https://stateb.us/client4.js"></script>
+```
+
+To use a custom server, add a `server="..."` attribute to the script tag:
+
+```html
+</script><script src="https://stateb.us/client4.js"
+                 server="http://localhost:3004"></script>
+```
+
+#### Server example
+
+```shell
+npm install statebus#next
+```
+
+The `#next` tells npm to give you version 4 instead of 3.
+
+Make a `demo.js`:
+```javascript
+bus = require('statebus/server')({port: 3004})
+
+// Define state that derives from other statebus state
+bus('/sum').to_fetch = function (key) {
+    var a = fetch('/a'), b = fetch('/b')
+    return {sum: a.val + b.val}  // Shorthand for => save.fire({key: '/sum', sum: a.val + b.val})
+}
+
+// Define state that incorporates external state
+var timer
+bus('/time').to_fetch = function (key) {
+    timer = setInterval(function () {
+        bus.save.fire({key: key, time: new Date().getTime()})  // Cause we can't just return from here
+    }, 1000)
+}
+bus('/time').to_forget = function (key) {
+    clearInterval(timer)
+}
+
+// Control changes to state
+bus('/blog').to_save = function (obj) {
+    if (<permitted>) {
+        obj.var = <validated var>
+        save.fire(obj)    // Go live!
+    } else
+        save.abort(obj)
+}
+```
+
+Run it:
+```shell
+node demo
+```
+
+#### Server example with multiple users
+
+Here's a blog with access control.
+  - Only approved "editors" can make posts.
+  - Posts aren't visibled until published.
+
+```javascript
+master = require('statebus/server')({clients: function (client) {
+
+    // Each client has their own bus "client", with a custom view of state:
+
+    var editors = {'/user/mike': true,
+                   '/user/2': true}
+
+    // Editors can see all posts, even unpublished ones
+    client('/blog').to_fetch = function (k) {
+        var blog = master.fetch('/blog')   // Be explicit with master vs. client fetch
+        blog = clone(blog)                 // Copy objects like this
+
+        var u = client.fetch('/current_user')
+        // Editors see the the raw list of posts
+        if (u.logged_in && editors[u.user.key]) return blog
+
+        // Otherwise, we'll filter out unpublished posts
+        blog.posts = (blog.posts || []).filter(function (p) { return !p.unpublished })
+        return blog
+    }
+
+    // Clients can't change the list of blog posts directly
+    client('/blog').to_save = function (o) { client.save.abort(o) }
+
+
+    // But they can add new posts, and edit old ones, if they are an editor
+    client('/post/*').to_save = function (o) {
+
+        // 1. Ensure current user is an editor.
+        var u = client.fetch('/current_user')
+        if (!u.logged_in || !editors[u.user.key]) {
+            client.save.abort(o)
+            return
+        }
+
+        // 2. Validate and save the post
+        o.author = o.author || u.user.key  // XXX problem here
+        o.title = o.title || ''
+        o.body = o.body || ''
+        master.save(o)  // Save it to master
+
+        // 3. Add it to the list of posts
+        var blog = master.fetch('/blog')
+        blog.posts = blog.posts || []
+        if (!blog.posts.find(function (p) {return p.key === o.key})) {
+            blog.posts.push(o)
+            master.save(blog)
+        }
+    }
+    // Only editors can /see/ unpublished posts
+    client('/post/*').to_fetch = function (k) {
+        var post = master.fetch(k)
+        var u = client.fetch('/current_user')
+
+        if (!post.unpublished || (u.logged_in && editors[u.user.key]))
+            return master.fetch(k)
+        else
+            return {error: 'not permitted'}
+    }
+}})
+
+// Any state not defined in Client will pass through to the master bus
+master('/post/*').to_save = function (o) {
+    //o.author 
+}
+```
+
+## Make a Bus
+Each bus defines a separate state space.
+
+```javascript
+var statebus = require('statebus')  // This is already done for you on client
+
+// Make a couple busses:
+var bus = statebus()                // This is already done for you on client
+var gus = statebus()
+```
+
+You can fetch and save from busses independently:
+
+```javascript
+bus.fetch('foo').bar          // ==> undefined
+bus.save({key:'foo', bar=3})
+bus.fetch('foo').bar          // ==> 3
+
+gus.fetch('foo').bar          // ==> undefined
+```
+
+You'll learn how to connect busses together in the *Configure a Bus* section.
+
+Multiple busses let you interact with multiple users on the server, where each
+user sees a slightly different state space.  Each user will have a distinct
+`client` bus, and which inherit state from a common `master` bus.
+
+If you only have one bus, you can also use the global `fetch()` and `save()`
+functions.
+
+```javascript
+fetch('foo').fuzz          // ==> undefined
+save({key:'foo', fuzz=3})
+fetch('foo').fuzz          // ==> 3
+```
+
+But these are disabled when you program multi-user servers,
+forcing you to disambiguate each time you fetch or save.
+
+(We might remove multiple busses in a future release.)
+
+## Fetch and Save with Rerunnable Functions
+
+The statebus `fetch()` and `save()` methods give you the illusion that all
+state is always available if you use them from within a *rerunnable* function.
+This way, if a piece of state isn't available, statebus will just wait until
+it becomes available, and re-run the function then. And every time the state
+changes, statebus will re-run the function again. This way you can write
+functions that produce state that is always up to date, whithout callbacks,
+promises, async/yield, threads, or fibers.
+
+Statebus considers functions to be rerunnable in all the important parts of its API:
+  - HTML renderers: `dom.BODY = <rerunnable>`
+  - Handlers: `bus(key).to_fetch = <rerunnable>`
+  - Fetch callbacks: `fetch(key, <rerunnable>)`
+
+You can also make your own rerunnable functions with
+`bus.reactive(<rerunnable>)` and `bus(<rerunnable>)` to make a standalone
+reactive process.
+
+#### Rerunning and `fetch()`
+
+Each time `fetch(key)` is called during the execution of a rerunnable
+function, the function will subscribe to the `key` and automatically re-run
+when it changes.  For instance, we can re-render the dom `BODY` element each
+time someone's name changes:
+
+```coffeescript
+dom.BODY = ->
+   DIV "Hello, " + fetch('mother').name
+```
+
+Or we can write a standalone function that rings a bell when an angel
+gets her wings:
+
+```coffeescript
+bus(->
+  if fetch('angel').wings
+     bell_sound.play()
+)
+```
+
+#### Intermediate states, crash recovery, and loading()
+
+If a state `/foo` hasn't loaded yet, `fetch("/foo")` will return an empty
+object `{key: "/foo"}`.  In these intermediate states, your code might return
+an errant `undefined`, or just crash:
+
+```coffeescript
+dom.THING1 = -> DIV fetch('/foo').bar       # <div>undefined</div>
+dom.THING2 = -> DIV fetch('/foo').bar.baz   # Crash: "Cannot read property 'baz' of undefined"
+```
+
+
+
+ You can check that any particular object is loaded by looking
+for the presence of the expected fields on it, or check whether an entire
+function has loaded with the `loading()` function:
+
+```coffeescript
+dom.BODY = ->
+   mom = fetch('/mom')
+   dad = fetch('/dad')
+   if loading()
+     return DIV 'Loading...'
+
+   DIV "Hello, #{mom.name} and #{dad.name}!'
+```
+
+
+
+#### Rerunning and `save()`
+
+
+#### Multiple busses
+You can reference multiple busses from any reactive function:
+
+```javascript
+// Only users can see their private parts
+client('/user/*').to_fetch = function (obj) {
+   var user         = master.fetch(obj.key)           // Fetched from master
+   var current_user = client.fetch('/current_user')   // Fetched from client
+   var result = clone(user)
+   if (current_user.key !== user.key)
+      result.email = 'hidden'
+
+   return result
+ }
+```
+
+## Configure a Bus
+
+## Bus API
+
+### Statebus Protocol Methods
+Each bus implements the four methods of the statebus protocol: `fetch`, `save`, `forget`, and `delete`.
+
+#### `bus.fetch(key,  callback=null)`
+
+  - If given `callback`, calls `callback(obj)` with the current state of `key`, and subscribes it to future changes
+  - Else if called from within a reactive function, returns the current state of `key`, and subscribes the function to future changes
+  - Otherwise, returns the current state of `key`
+
+
+#### `bus.save(obj,   options={})`
+
+  - Changes the state of `obj.key` to `obj`
+  - You don't need to specify `options` unless you implement custom versioning.  Options take the form `{version: <v>, parent: <p>}`, where each `<v>` and `<p>` are a string.
+  - `Todo:` Does this recursively save all nested state?
+
+#### `bus.forget(key, callback=null)`
+
+  - If `callback` is specified, cancels the subscription of `callback` to state changes at `key`.
+  - Else, unsubscribes the currently executing reactive function from `key`
+
+#### `bus.delete(key)`
+
+  - (Not yet fully implemented.)
+  - Removes the state at `key` from the state space
+
+
+
+### Reactive functions
+
+#### `f = bus.reactive(func)`
+- Returns a reactive version of `func`, with the API:
+  - `f(args...)` or `object.f(args...)` runs the reactive function, with `this=object` and `arguments=args`.  (This behavior is likely to change in the future.)
+  - `f.react()` triggers a reaction using the most recently specified `this` and `args`
+  - `f.forget()` stops reacting
+  - `f.loading()` reports whether the function depends on any loading keys
+
+
+#### `bus(func)`
+- Equivalent to:
+```javascript
+bus.reactive(func)
+func()
+```
+
+#### `bus.loading(key=null)`
+  - If given a `key`, returns true if `bus` has pending fetches waiting for data to key from other busses.
+  - Without a `key`, returns true if the currently-executing reactive function has subscribed to any keys with such pending fetches.
+
+
+### Configuring a Bus
+
+You configure a bus by specifying functions to fetch, save, forget, and delete
+state at keys.  Each function will automatically be made reactive, so you can
+fetch and save within them.  However, the save, forget, and delete handlers
+will only be reactive until they successfully complete once without being
+loading().
+
+#### `bus(key_pattern).to_fetch = function (key) {...}`
+
+  - Called the first time a `key` matching `key_pattern` is fetched on `bus`.
+  - The `function` is made reactive until `key` is forgotten by all subscribers
+    on `bus`.
+
+#### `bus(key_pattern).to_save  = function (obj) {...}`
+
+  - Called each time a state object matching `key_pattern` is saved on `bus`.
+  - If a save handler is defined for a key, the state object won't
+    actually be fired to the bus unless `save.fire(obj)` is called.
+    - If *no* save handler is defined for a key, the object will be fired
+      immediately.
+    - The save handler is free to alter the object (*e.g.* validating and
+      cleaning fields) before firing the save.
+    - If the save handler wants to reject the change entirely, it should run
+      `save.abort(obj)`, which will notify the calling bus that its change has
+      been rejected so that it can undo its state change.
+  - The `function` is made reactive until it completes once without being `loading()`.
+
+
+
+#### `bus(key_pattern).to_forget = function (key) {...}`
+  - Called when the last subscription to `key` has been forgotten on `bus`, to
+    notify any upstream busses providing `key` to cancel this bus's
+    subscription to the `key`.
+  - The `function` is made reactive until it completes once without being `loading()`.
+
+#### `bus(key_pattern).to_delete = function (key) {...}`
+  - Called each time `key` is deleted on `bus`.
+  - The `function` is made reactive until it completes once without being `loading()`.
+
+### Other little guys
+
+#### `bus.save.fire(obj)`
+- Immediately publishes `obj` on the `bus`, re-rendering any subscribed functions.
+- If no `.to_save` handler is defined for a key, any `save(obj)` operation
+  will automatically invoke `save.fire(obj)`.  But if a `.to_save` handler
+  *is* defined, the programmer is responsible for ensuring that
+  `save.fire(obj)` is called.
+
+#### `bus.save.abort(obj)`
+- Call this if a `to_save` handler denies a requested change to a state `obj`.
+  It will notify the sending bus.
+
+#### `bus.dirty(key)`
+  - Re-runs the `bus(key).to_fetch` function.
+  - Use this if your `to_fetch` function derives from a variable that's changed outside of statebus, and you need to explicitly tell it to re-run.
+
+
+### Raw Access
+
+#### `bus.cache[key]`
+  - Lets you bypass `fetch` to access the cache directly
+  - You shouldn't need this.
+
+
+
+### Valid State
+Each state object:
+- Is JSON
+- Is an object
+- Has a field `key:`, which defines a unique URL
+- Can contain other state objects
+
+For instance, these state objects are **valid**:
+
+| Example state |
+| :---- |
+| `{key: '/blog', posts: [], owner: '/user/4'}` |
+| `{key: 'empty thing'}` |
+| `{key: 'parent/4', child: {key: '/kiddo/3'}}` |
+| `{key: 'some variable value', var: 3}` |
+
+But these aren't:
+
+| Invalid state: | Because |
+| :---- | :---- |
+| `3` | Individual variables *have* to be wrapped in objects. |
+| `[3, 5, {23: 99}]` | Arrays must be wrapped in objects too |
+| `{var: 3}` |  Objects need a `key:` |
+| `{key: 'foo', var: function () {}}` |  Functions aren't in JSON. |
+
+### URLs
+The URL for a `key` can be an arbitrary string.
+
+
+### Server features
+
+```javascript
+master.serve({
+  port: 3004,
+  backdoor: 4004
+})
+```
+#### Back door
+The backdoor is cool. Add a backdoor attribute to the script tag in your `client.html` file:
+
+```html
+</script><script src="https://stateb.us/client4.js"
+                 server="http://localhost:3004"
+                 backdoor="http://localhost:4004"></script>
+```
+
+And you will have a new variable `master` in the javascript console connected
+directly to the master bus on the server!
+
+```javascript
+master.fetch('/friendbo')
+```

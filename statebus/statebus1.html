@@ -9,18 +9,15 @@
   </center>
 
 <abstract>
-    Anyone can add a website to the open web, but individual websites
-    are closed.  <!--Only Facebook employees can contribute to
-    Facebook, for example.--> And the economics of the web have led to
-    a number of large near-monopoly websites, such as Facebook and
-    Google.  To compete with these monopolies, we need open websites
-    that anyone can contribute to.  We can build open websites with a
-    new web architecture that defines a standard protocol for
-    the <i>insides</i> of websites.  This architecture,
-    called <conc>Statebus</conc>, both makes it easier to develop the
-    internals of a website, while simultaneously making it easy to
-    share the internals with other websites.
+    Anyone can add a website to the open web, but the insides of
+    websites are closed.  <!--Only Facebook employees can contribute
+    to Facebook, for example.--> <conc>Statebus</conc> is an extension
+    to the web architecture that defines a common protocol for
+    the <i>insides</i> of websites.  This architecture both makes it
+    easier to develop the internals of a website, while simultaneously
+    making it easy to share the internals with other websites.
 </abstract>
+
 <!--
 <abstract>
     The web allows anyone to contribute, by creating a site and
@@ -32,7 +29,7 @@
     automate the synchronization of state amongst their components
     (DOM, models, REST endpoints, server caches,
     databases, <i>etc.</i>).  We can automate this synchronization
-    with a standard protocol, that we call <conc>Statebus</conc>,
+    with a common protocol, that we call <conc>Statebus</conc>,
     which improves upon <conc>REST</conc> to keep
     state <i>synchronized</i>—not just transferred—amongst multiple
     components.  Using this protocolor makes dynamic websites much
@@ -40,6 +37,7 @@
     and websites to build upon their state.
 </abstract>
 -->
+
 
 <h2>Much of programming is just moving state around</h2>
 
@@ -153,7 +151,7 @@ powerful versions of HTTP's <conc>GET</conc> and <conc>PUT</conc>.
 They give us features necessary to author the <i>insides</i> of
 websites with a shared protocol.
 
-<p><img src="transition to statebus.jpg"/>
+<p><img src="images/transition to statebus.jpg"/>
 
 <i>Caption:</i>
 <ol>
