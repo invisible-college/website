@@ -22,27 +22,44 @@ dom.BODY = ->
         color: "#B7B8BF"
       'We should probably move this to a god mode sidebar like Consider.It.'
 
-    projects_list = fetch("website/projects")
+    projects_list = fetch("/website/projects")
 
     DIV
       style:
         margin: "10px"
         float: "clear"
-      projects_list.list.map (entry) ->
-        if not entry.key?
+      projects_list.list.map (project) ->
+        if not project.key?
           console.log("No entry key!")
-        if not entry.name?
+        if not project.name?
           console.log("No entry name")
 
         DIV
           style: null
-          HEADER
-            A
-              href: project.url
-              project.name
-          P
-            style: marginTop: '0px'
-            project.desc
+          DIV
+            style: float: "left"
+            HEADER
+              A
+                href: project.url
+                project.name
+            P
+              style:
+                marginTop: '0px'
+              project.desc
+          I
+            style:
+              margin: "20px"
+              float: "left"
+            className: 'demo-icon icon-cancel-circled'
+            onClick: (e) =>
+              l = projects_list.list.slice()
+              i = l.indexOf(project)
+              l.splice(i,1)
+              projects_list.list = l
+              save(projects_list)
+          DIV
+            style:
+              clear: "both"
 
     # Function to generate an entry form
     # tip: thing-in-progress, the object to build and save
@@ -124,6 +141,7 @@ dom.BODY = ->
 
   <!-- Custom styles for this template -->
   <link href="/css/cover.css" rel="stylesheet">
+  <link href="/css/fontello.css" rel="stylesheet">
   <!--<link href="css/google-type.css" rel="stylesheet">-->
 
 </head>
@@ -135,10 +153,8 @@ dom.BODY = ->
   // Global symbols needed by router below
 
   var statebus_version = 3;
-  // My AWS instance
-  var aws_ip='http://52.32.161.104';
-  var statebus_server = aws_ip+':45678';
 
+  var statebus_server = 'https://stateb.us:3003'
   </script>
   <!-- <script src="js/util.js"></script> -->
   <!-- route first to set the view, then parse statebus -->
