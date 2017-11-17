@@ -25,8 +25,12 @@ document.body.append(t)
 
 var edit = document.createElement('div')
 edit.style.position = 'fixed'
-edit.style.bottom = '20px'
-edit.style.right = '20px'
+edit.style.bottom = '0px'
+edit.style.right = '0px'
+edit.style.padding = '30px'
+edit.style.cursor = 'pointer'
+edit.style.textDecoration = 'underline'
+edit.style.backgroundColor = 'rgba(255, 255, 255, .5)'
 edit.onclick = toggle_editor
 edit.innerText = 'edit'
 document.body.append(edit)
