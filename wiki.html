@@ -34,6 +34,7 @@ edit.onclick = toggle_editor
 edit.innerText = 'edit'
 document.body.append(edit)
 
+
 function update_markdown() {
     output.innerHTML = marked(t.value, {sanitize: !is_safe})
     document.body.className = 'nopad'
