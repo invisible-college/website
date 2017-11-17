@@ -1,0 +1,105 @@
+<body>
+<script src="https://invisible-college.github.io/diffsync/diffsync.js"></script>
+<script src="https://invisible.college/js/marked.min.js"></script>
+<link rel="stylesheet" href="https://invisible.college/css/github-markdown.css">
+<script>
+
+var output = document.createElement('div')
+output.className = 'pad'
+output.style.position = 'fixed'
+output.style.overflow = 'auto'
+output.style.height = '100%'
+document.body.append(output)
+
+
+var t = document.createElement('textarea')
+t.style.position = 'fixed'
+t.style.bottom = '0px'
+t.style.left = '0px'
+t.style.width = '100%'
+t.style.height = '50%'
+t.style.display = 'none'
+t.style.fontSize = '15px'
+t.style.fontFamily = 'helvetica, monaco, lucida grande, avenir'
+document.body.append(t)
+
+var edit = document.createElement('div')
+edit.style.position = 'fixed'
+edit.style.bottom = '20px'
+edit.style.right = '20px'
+edit.onclick = toggle_editor
+edit.innerText = 'edit'
+document.body.append(edit)
+
+function update_markdown() {
+    output.innerHTML = marked(t.value, {sanitize: !is_safe})
+    document.body.className = 'nopad'
+}
+update_markdown()
+
+var is_safe = window.location.href.match(/^https?:\/\/wiki\./)
+var channel = is_safe ? '/wiki' + window.location.pathname : window.location.pathname
+
+var ds = diffsync.create_client({
+    ws_url : 'wss://invisible.college:60607',
+    channel : channel,
+    get_text : function () {
+        return t.value
+    },
+    get_range : function () {
+        return [t.selectionStart, t.selectionEnd]
+    },
+    on_text : function (text, range) {
+        t.value = text
+        if (t.style.display != 'none') t.setSelectionRange(range[0], range[1])
+        update_markdown()
+    },
+    on_range : null
+})
+
+t.onkeyup = function (e) {
+    ds.on_change()
+    update_markdown()
+}
+t.onpaste = function () {
+    setTimeout(function () {
+        ds.on_change()
+        update_markdown()
+    }, 0)
+}
+
+function toggle_editor () {
+    console.log('toggling editor', t.style.display)
+    var display = t.style.display != 'none'
+    t.style.display = display?'none':null
+    output.style.height = display?'100%':'50%'
+    if (!display)
+        setTimeout(function () {t.focus()}, 10)
+}
+
+document.body.onkeydown = function (e) {
+    //window.last_e = e
+    var mods = 0
+    for (k in {ctrlKey:1, shiftKey:1, altKey:1, metaKey:1})
+        if (e[k]) mods += 1
+
+    e.keyCode == 32 && console.log('space', mods, e, mods >= 2)
+    if (mods >= 2 && e.keyCode == 32) {
+        e.stopPropagation()
+        toggle_editor()
+    }
+}
+
+// var latest_tap
+// document.body.addEventListener('touchstart', (e) => {
+//    var now = new Date().getTime()
+//    var timesince = now - latest_tap
+//    if (timesince < 600 && timesince > 0) {
+//        // It's a double-tap
+//        toggle_editor()
+//    }
+//    latest_tap = new Date().getTime()
+// }, false)
+
+</script>
+</body>

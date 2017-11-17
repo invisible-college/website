@@ -27,7 +27,7 @@ body {
 
 img { max-width: 750px; }
 
-abstract {
+abstract, abstract2 {
     padding: 60px 80px;
     /*font-style: italic;*/
     display: block;
@@ -41,7 +41,7 @@ author {
 }
 
 kbd, tt, pre, code {
-    font-size: 12pt;
+    font-size: .9em;
     font-family: Inconsolata, Computer Modern Typewriter, Monaco, monospace;
 }
 
@@ -54,6 +54,9 @@ concrete, conc {
     padding: 20px;
     background-color: #eee;
 }
+
+.param { width: 60; }
+.param2 { width: 20; }
 
 h1 {
     font-size: 4.5em;

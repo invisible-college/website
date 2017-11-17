@@ -12,7 +12,11 @@ body {
   line-height: 1.6;
   word-wrap: break-word;
   padding: 10px 60px;
+  hyphens: auto;
+  text-align: justiyf;
 }
+body.nopad { padding: 0; margin: 0; }
+.pad { padding: 10px 60px; }
 
 a {
   background-color: transparent;

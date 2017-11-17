@@ -440,8 +440,8 @@
         var js_urls = {
             react: 'https://cdnjs.cloudflare.com/ajax/libs/react/0.12.2/react.js',
             sockjs: 'https://cdn.jsdelivr.net/sockjs/0.3.4/sockjs.min.js',
-            statebus: 'https://dl.dropboxusercontent.com/u/1000932/libs/statebus3.1.js',
-            coffeescript: 'https://dl.dropboxusercontent.com/u/1000932/libs/coffee-script.js'
+            statebus: 'https://invisible.college/js/statebus3.1.js',
+            coffeescript: 'https://invisible.college/js/coffee-script.js'
             //coffeescript: 'https://cdnjs.cloudflare.com/ajax/libs/coffee-script/1.10.0/coffee-script.min.js'
         }
         for (name in js_urls)
