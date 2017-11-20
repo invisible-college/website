@@ -32,7 +32,6 @@ edit.style.textDecoration = 'underline'
 edit.style.backgroundColor = 'rgba(255, 255, 255, .5)'
 edit.onclick = toggle_editor
 edit.innerText = 'edit'
-edit.onload = function () {f=3}
 document.body.append(edit)
 
 
@@ -44,10 +43,7 @@ function update_markdown_later() {
 }
 function update_markdown() {
     timer = null
-    var start = new Date().getTime();
-    //var finish = '\n<script>render_delay = new Date().getTime() - '+start+'<'+'/script>'
-    //var finish = '\n<div onload="f=3"></div>'
-    output.innerHTML = marked(t.value, {sanitize: !is_safe})// + finish
+    output.innerHTML = marked(t.value, {sanitize: !is_safe})
     document.body.className = 'nopad'
 }
 update_markdown()
@@ -87,7 +83,7 @@ t.onpaste = function () {
 }
 
 function toggle_editor () {
-    console.log('toggling editor', t.style.display)
+    //console.log('toggling editor', t.style.display)
     var display = t.style.display != 'none'
     t.style.display = display?'none':null
     output.style.height = display?'100%':'50%'
@@ -96,28 +92,15 @@ function toggle_editor () {
 }
 
 document.body.onkeydown = function (e) {
-    //window.last_e = e
     var mods = 0
     for (k in {ctrlKey:1, shiftKey:1, altKey:1, metaKey:1})
         if (e[k]) mods += 1
 
-    e.keyCode == 32 && console.log('space', mods, e, mods >= 2)
     if (mods >= 2 && e.keyCode == 32) {
         e.stopPropagation()
         toggle_editor()
     }
 }
-
-// var latest_tap
-// document.body.addEventListener('touchstart', (e) => {
-//    var now = new Date().getTime()
-//    var timesince = now - latest_tap
-//    if (timesince < 600 && timesince > 0) {
-//        // It's a double-tap
-//        toggle_editor()
-//    }
-//    latest_tap = new Date().getTime()
-// }, false)
 
 </script>
 </body>
