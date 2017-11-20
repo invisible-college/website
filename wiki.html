@@ -32,11 +32,22 @@ edit.style.textDecoration = 'underline'
 edit.style.backgroundColor = 'rgba(255, 255, 255, .5)'
 edit.onclick = toggle_editor
 edit.innerText = 'edit'
+edit.onload = function () {f=3}
 document.body.append(edit)
 
 
+var timer
+var render_delay = 100
+function update_markdown_later() {
+    if (timer) clearTimeout(timer)
+    timer = setTimeout(update_markdown, render_delay)
+}
 function update_markdown() {
-    output.innerHTML = marked(t.value, {sanitize: !is_safe})
+    timer = null
+    var start = new Date().getTime();
+    //var finish = '\n<script>render_delay = new Date().getTime() - '+start+'<'+'/script>'
+    //var finish = '\n<div onload="f=3"></div>'
+    output.innerHTML = marked(t.value, {sanitize: !is_safe})// + finish
     document.body.className = 'nopad'
 }
 update_markdown()
@@ -56,19 +67,22 @@ var ds = diffsync.create_client({
     on_text : function (text, range) {
         t.value = text
         if (t.style.display != 'none') t.setSelectionRange(range[0], range[1])
-        update_markdown()
+        update_markdown_later()
     },
     on_range : null
 })
 
-t.onkeyup = function (e) {
+var old_text
+t.onkeyup = function () {
+    if (old_text === t.value) return
+    old_text = t.value
     ds.on_change()
-    update_markdown()
+    update_markdown_later()
 }
 t.onpaste = function () {
     setTimeout(function () {
         ds.on_change()
-        update_markdown()
+        update_markdown_later()
     }, 0)
 }
 

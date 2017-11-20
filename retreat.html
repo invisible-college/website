@@ -1,8 +1,0 @@
-<script type="statebus">
-dom.BODY = ->
-  code = fetch('/code/invisible.college' + window.location.pathname.slice(0,-5)).code
-  DIV(dangerouslySetInnerHTML: __html: marked(code))
-
-#</script><script src="https://stateb.us/client.js"></script>
-<script src="/js/marked.min.js"></script>
-<link rel="stylesheet" href="/css/github-markdown.css">

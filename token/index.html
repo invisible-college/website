@@ -1,0 +1,446 @@
+<script type="statebus">
+
+dom.BODY = ->
+  {price, spread} = curr_price()
+  DIV
+    fontFamily: 'avenir, avenir next'
+    H1 'Mini-Mart Private Market'
+    P 'Buy and sell tokens here'
+    ACCOUNT()
+    TICKER()
+    OWNERS()
+    H2 'Execute a trade'
+    INSTANT_ORDER()
+    H2 'Place bid at price'
+    PLACE_BID()
+    H2 'Bids'
+    DIV color: 'darkred', BUYS_SELLS(which: 'sells')
+    B
+      color: 'darkorange'
+      "--- market price: "
+      "$#{price.toFixed(2)}"
+      "/token ± $#{(spread/2).toFixed(2)} ---"
+    DIV color: 'darkgreen', BUYS_SELLS(which: 'buys')
+    H2 'Filled bids'
+    FILLS()
+
+curr_price = ->
+  sells = fetch('/sells')._ or []
+  buys = fetch('/buys')._ or []
+  total = 0
+  for t in state['/tokens']
+    total += t.amount
+
+  if sells.length == 0 or buys.length == 0 then return ''
+
+  last_sale = sells[sells.length-1]
+  first_buy = buys[0]
+
+  sell_price = Math.abs(last_sale.dollars / last_sale.tokens)
+  buy_price  = Math.abs(first_buy.dollars / first_buy.tokens)
+  spread = Math.abs(sell_price - buy_price)
+  price = (sell_price + buy_price) / 2
+  market_cap = price * total
+  {price, spread, market_cap}
+
+dom.TICKER = ->
+  {price, spread, market_cap} = curr_price()
+  DIV
+    position: 'absolute'
+    top: 30
+    right: 30    
+    "Current price: "
+    B "$#{price.toFixed(2)}"
+    '/token'
+    BR()
+    "Total value: $#{market_cap.toFixed(0)}"
+    
+dom.PLACE_BID = ->
+  fetch('/new_bid')
+  state.bid or= {}
+  bid = state.bid
+  tokens = parseFloat(bid.tokens)
+  price = parseFloat(bid.price)
+  dollars = tokens * price
+  fire = ->
+    save({
+      key: '/new_bid'
+      tokens: if bid.sell then -tokens else tokens
+      dollars: if bid.sell then dollars else -dollars
+      user_key: fetch('/current_user').user.key
+    })
+    # bid.tokens = 0
+    # bid.price = 0
+
+  DIV {},
+    SELECT
+      value: if bid.sell then 'sell' else 'buy'
+      onChange: (e) -> bid.sell = e.target.value == 'sell'
+      OPTION value: 'sell', 'Sell'
+      OPTION value: 'buy', 'Buy'
+
+    INPUT
+      type: 'text'
+      value: bid.tokens
+      onChange: (e) -> bid.tokens = e.target.value
+      onKeyDown: (e) -> if e and e.keyCode==13 then fire()
+    ' tokens at $'
+
+    INPUT
+      type: 'text'
+      value: bid.price
+      onChange: (e) -> bid.price = e.target.value
+      onKeyDown: (e) -> if e and e.keyCode==13 then fire()
+    '/token.'
+
+    if dollars
+      " Total: $#{dollars.toFixed(2)} "
+
+    BUTTON
+      disabled: not tokens or not dollars or tokens <= 0 or dollars <= 0 or not fetch('/current_user').logged_in
+      onClick: fire
+      'Place bid'
+
+dom.INSTANT_ORDER = ->
+  state.order or= {}
+  order = state.order
+  tokens = parseFloat(order.tokens)
+  tokens_delta = (if order.sell then -tokens else tokens)
+  instant = fetch('/instant/' + if order.tokens then tokens_delta else '')
+  dollars = instant.dollars
+  state['/new_order']
+
+  fire = ->
+    save({
+      key: '/new_order'
+      tokens: tokens_delta
+      user_key: fetch('/current_user').user.key
+    })
+
+  DIV {},
+    SELECT
+      value: if order.sell then 'sell' else 'buy'
+      onChange: (e) -> order.sell = e.target.value == 'sell'
+      OPTION value: 'sell', 'Sell'
+      OPTION value: 'buy', 'Buy'
+
+    INPUT
+      type: 'text'
+      value: order.tokens
+      onChange: (e) -> order.tokens = e.target.value
+      onKeyDown: (e) -> if e and e.keyCode==13 then fire()
+    ' tokens.'
+
+    if instant.error
+      ' Error: ' + instant.error
+    else if tokens and dollars
+      " Total: $#{dollars.toFixed(2)} "
+
+    BUTTON
+      disabled: instant.error or not tokens or tokens <= 0 or not fetch('/current_user').logged_in
+      onClick: fire
+      'Execute trades'
+  
+
+# dom.BIDS = ->
+#   bids = fetch('/bids')
+#   DIV {},
+#     for k,bid of bids
+#       if k isnt 'key'
+#         price = -(bid.tokens / bid.dollars)
+#         buysell = if bid.tokens < 0 then 'sell' else 'buy'
+#         DIV {},
+#           "#{buysell} #{Math.abs(bid.tokens)} tokens at $#{price}/token "
+#           fetch(bid.user_key).email
+#           if bid.user_key == fetch('/current_user').user.key
+#             SPAN
+#               textDecoration: 'underline'
+#               cursor: 'pointer'
+#               onClick: do (bid) -> -> bus.delete(bid.key)
+#               '[X]'
+
+
+price_of = (bid) -> Math.abs(bid.dollars / bid.tokens)
+dom.BUYS_SELLS = (which) ->
+  bids = fetch('/' + which)._ or []
+  DIV {},
+    for bid in bids
+      fetch(bid.key)
+      price = price_of(bid)
+      buysell = if bid.tokens < 0 then 'sell' else 'buy'
+      DIV {},
+        " #{buysell} #{Math.abs(bid.tokens).toFixed(4)} tokens at $#{price.toFixed(4)}/token "
+        fetch(bid.user_key).name
+        ' '
+        if bid.user_key == fetch('/current_user').user?.key
+          SPAN
+            textDecoration: 'underline'
+            cursor: 'pointer'
+            onClick: do (bid) -> -> bus.delete(bid.key)
+            '[X]'
+
+dom.FILLS = ->
+  fills = fetch('/fills')._
+  DIV {},
+    for f in fills or []
+      t = (new Date(f.when*1000)).toLocaleDateString()
+      buysell = if f.tokens > 0 then 'bought' else 'sold'
+      tokens = Math.abs(f.tokens).toFixed(4)
+      dollars = Math.abs(f.dollars).toFixed(2)
+      maker = fetch(f.maker_key).name
+      taker = fetch(f.taker_key).name
+      p = price_of(f).toFixed(2)
+      DIV("#{t} #{taker} #{buysell} #{tokens} tokens at $#{p} (= $#{dollars}) ",
+           "from #{maker} ")
+         #JSON.stringify(f)
+
+
+
+title_style =
+  #fontFamily: 'Cabin'
+  color: '#522d1c'
+  fontSize: 34
+  position: 'relative'
+  bottom: 17
+  left: 12
+
+font_style =
+  fontFamily: 'avenir, helvetica, sans-serif'
+  fontSize: 19
+  color: '#522d1c'
+
+link_style = {cursor: 'pointer', textDecoration: 'underline', color: '#944B2B'}
+i_s = 15  # Input font Size
+i_h = 26  # Input Height
+
+left_col = 140
+right_col = 310
+full_col = left_col + right_col + 12
+
+row_style = style: height: 33
+label_style =
+  style:
+    display: 'inline-block'
+    width: left_col
+    textAlign: 'right'
+    marginRight: full_col - (left_col + right_col)
+
+little_blue_button = (text, submit, disable) ->
+  DIV style: width: full_col, textAlign: 'right',
+    BUTTON
+      disabled: disable
+      style:
+        fontSize: i_s
+        fontFamily: 'avenir'
+        borderRadius: 10
+        backgroundColor: if disable then '#666' else '#237BD7'
+        color: 'white'
+        fontWeight: 600
+        padding: '5 20'
+        textAlign: 'center'
+        border: 'none'
+        margin: '20 0'
+        cursor: if not disable then 'pointer'
+
+      # onKeyDown: submit
+      onClick: if not disable then submit
+      text
+
+dom.ACCOUNT = ->
+  c = state['/current_user']
+  DIV
+    padding: 10
+    backgroundColor: '#eee'
+    position: 'absolute'
+    right: 30
+    if c.logged_in
+      DIV({}, c.user.name, ', ', c.user.email, ' ', A(href:'', onClick:(-> c.logout = true), '[X]'))
+    else if state.login
+      LOGIN()
+    else
+      DIV
+        cursor: 'pointer'
+        textDecoration: 'underline'
+        onClick: => state.login = true
+        'Login'
+
+dom.LOGIN = ->
+  c = fetch('/current_user')
+
+  logging_in = @local.logging_in
+  if logging_in == undefined
+    logging_in = not (@props.initial == 'create')
+
+  # Log in
+  if logging_in
+    fire = =>
+      delete c.error
+      c.login_as = {login: @local.email, pass: @local.pass}
+      save(c)
+    submit = (e) => if e and e.keyCode==13 then fire()
+    DIV {},
+      DIV style: marginBottom: 20,
+        SPAN
+          style: link_style
+          onMouseDown: => @local.logging_in = false; save(@local)
+          'Create an account'
+        ', or Log in:'
+
+      DIV row_style,
+        DIV label_style, 'Email:'
+        INPUT
+          style: width: right_col, height: i_h, fontSize: i_s, fontFamily: 'avenir'
+          type: 'text'
+          value: @local.email
+          onKeyDown: submit
+          onChange: (e) => @local.email = e.target.value; save(@local)
+
+      DIV row_style,
+        DIV label_style, 'Password:'
+        INPUT
+          style: width: right_col, height: i_h, fontSize: i_s, fontFamily: 'avenir'
+          type: 'password'
+          onKeyDown: submit
+          value: @local.pass
+          onChange: (e) => @local.pass = e.target.value; save(@local)
+
+      little_blue_button('Log in', fire)
+      if c.error then DIV style: backgroundColor: '#fee', padding: 5, c.error
+
+  # Create account
+  else
+    fire = =>
+      delete c.error
+      c.create_account = {pass: @local.pass, email: @local.email, login: @local.email, name: @local.name}
+      save(c)
+      delete c.create_account
+      c.login_as = {login: @local.email, pass: @local.pass}
+      save(c)
+      # @local.create_account = false; save(@local)
+    submit = (e) => if e and e.keyCode==13 then fire()
+    DIV {},
+      DIV style: marginBottom: 20,
+        SPAN
+          style: link_style
+          onMouseDown: => @local.logging_in = true; save(@local)
+          'Log in'
+        ', or create an account:'
+
+      DIV row_style,
+        DIV label_style, 'Name:'
+        INPUT
+          style: width: right_col, height: i_h, fontSize: i_s, fontFamily: 'avenir'
+          type: 'text'
+          value: @local.name
+          onKeyDown: submit
+          onChange: (e) => @local.name = e.target.value; save(@local)
+
+      DIV row_style,
+        DIV label_style, 'Email:'
+        INPUT
+          style: width: right_col, height: i_h, fontSize: i_s, fontFamily: 'avenir'
+          type: 'text'
+          value: @local.email
+          onKeyDown: submit
+          onChange: (e) => @local.email = e.target.value; save(@local)
+
+      DIV row_style,
+        DIV label_style, 'Password:'
+        INPUT
+          style: width: right_col, height: i_h, fontSize: i_s, fontFamily: 'avenir'
+          type: 'password'
+          onKeyDown: submit
+          value: @local.pass
+          onChange: (e) => @local.pass = e.target.value; save(@local)
+
+      DIV row_style,
+        DIV label_style, 'Verify Password:'
+        INPUT
+          style: width: right_col, height: i_h, fontSize: i_s, fontFamily: 'avenir', backgroundColor: (if @local.vpass != @local.pass then '#fee'), borderColor: if @local.vpass != @local.pass then '#f66'
+          type: 'password'
+          onKeyDown: submit
+          value: @local.vpass
+          onChange: (e) => @local.vpass = e.target.value; save(@local)
+
+      little_blue_button('Create account', fire)
+      if c.error then DIV style: backgroundColor: '#fee', padding: 5, c.error
+  
+
+
+dom.PIE = (size, style) ->
+  c = state['/tokens']
+  total = 0; for o in c then total += o.amount
+  for owner in c
+    owner.percent = owner.amount / total
+
+  cumulative_percent = 0
+
+  coordinates_for_percent = (percent) ->
+    x = Math.cos(2 * Math.PI * percent)
+    y = Math.sin(2 * Math.PI * percent)
+    [x, y]
+
+  if @loading() then return 'loading...'
+
+  style or= {}
+  style.transform = 'rotate(-90deg)'
+
+  SVG
+    viewBox: '-1 -1 2 2'
+    style: style
+    height: size
+    for slice in c
+      # destructuring assignment sets the two variables at once
+      [startx, starty] = coordinates_for_percent(cumulative_percent)
+
+      # each slice starts where the last slice ended, so keep a cumulative percent
+      cumulative_percent += slice.percent
+
+      [endx, endy] = coordinates_for_percent(cumulative_percent)
+
+      # if the slice is more than 50%, take the large arc (the long way around)
+      large_arc_flag = if slice.percent > .5 then 1 else 0
+
+      # create an array and join it just for code readability
+      paths = [
+        "M #{startx} #{starty}",                       # Move
+        "A 1 1 0 #{large_arc_flag} 1 #{endx} #{endy}", # Arc
+        "L 0 0",                                       # Line
+      ].join(' ')
+
+      PATH
+        d: paths
+        fill: slice.color
+
+dom.OWNERS = ->
+  c = state['/tokens']
+  total = 0; for o in c then total += o.amount
+  balance = 10
+  DIV
+    fontFamily: 'roboto'
+    padding: 15
+    width: 540
+    #marginBottom: 50
+    PIE
+      style: position: 'absolute'
+      size: 80
+    DIV
+      style: marginLeft: 90, textAlign: 'left', marginTop: 10
+      for owner in c
+        DIV
+          color: owner.color
+          SPAN width: 150, display: 'inline-block', "◼ " + owner.name.replace('-', ' ')
+          
+          INPUT
+            type: 'text'
+            disabled: not fetch('/current_user').logged_in
+            style: width: 40, textAlign: 'right'
+            value: owner.amount
+            onChange: do (owner) -> (e) -> owner.amount = parseFloat(e.target.value)
+          ' tokens = '
+          SPAN width: 40, "$#{owner.amount * curr_price().price}"
+          
+
+
+
+#</script><script src="https://stateb.us/client6.js" server="state://invisible.college:3336"></script>
