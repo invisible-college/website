@@ -13,7 +13,8 @@ body {
   word-wrap: break-word;
   padding: 10px 60px;
   hyphens: auto;
-  text-align: justiyf;
+  text-align: justify;
+  margin: 0;
 }
 body.nopad { padding: 0; margin: 0; }
 .pad { padding: 10px 60px; }
