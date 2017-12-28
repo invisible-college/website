@@ -13,7 +13,7 @@ dom.BODY = ->
              }'''
 
     DIV fontWeight: 'bold', fontSize: 40, 'Invisible College'
-    DIV color: "#888", fontSize: 30, "Not available on TV"
+    DIV color: "#555", "Science without the bullshit"
 
     for list in ['Projects', 'People']
       DIV {},
@@ -32,5 +32,5 @@ for p in ['/projects', '/people']
   bus.fetch_once(p, (o) -> shuffle(o._); save(o))
 
 #</script><script src="https://stateb.us/client6.js" server=state://invisible.college></script>
-<script src="/client/common.coffee"></script>
+<script src="https://invisible.college/client/common.coffee"></script>
 <link href="https://fonts.googleapis.com/css?family=Ovo|Muli:300" rel=stylesheet type=text/css>
