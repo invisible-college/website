@@ -6,17 +6,19 @@
 
 var output = document.createElement('div')
 output.className = 'pad'
-output.style.position = 'fixed'
-output.style.overflow = 'auto'
-output.style.height = '100%'
 document.body.append(output)
+
+var bottom_pad = document.createElement('div')
+bottom_pad.style.height = '50vh'
+bottom_pad.style.display = 'none'
+document.body.append(bottom_pad)
 
 var t = document.createElement('textarea')
 t.style.position = 'fixed'
 t.style.bottom = '0px'
-t.style.left = '0px'
+t.style.right = '0px'
 t.style.width = '100%'
-t.style.height = '50%'
+t.style.height = '50vh'
 t.style.display = 'none'
 t.style.fontSize = '15px'
 t.style.fontFamily = 'helvetica, monaco, lucida grande, avenir'
@@ -82,13 +84,25 @@ t.onpaste = function () {
     }, 0)
 }
 
+var vert = true, editing = false
+function render () {
+    t.style.display = editing ? null : 'none'
+    bottom_pad.style.display = (editing && vert) ? null : 'none'
+
+    if (vert) {
+        t.style.width = '100vw'
+        t.style.height = '50vh'
+        output.style.width = null
+    } else {
+        t.style.width = '50vw'
+        t.style.height = '100vh'
+        if (editing) output.style.width = '50vw'
+    }
+}
 function toggle_editor () {
-    //console.log('toggling editor', t.style.display)
-    var display = t.style.display != 'none'
-    t.style.display = display?'none':null
-    output.style.height = display?'100%':'50%'
-    if (!display)
-        setTimeout(function () {t.focus()}, 10)
+    editing = !editing
+    render()
+    if (editing) setTimeout(function () {t.focus()}, 10)
 }
 
 document.body.onkeydown = function (e) {
@@ -101,6 +115,16 @@ document.body.onkeydown = function (e) {
         toggle_editor()
     }
 }
+
+window.onresize = function () {
+    var w = window.innerWidth, h = window.innerHeight
+    if (w < 1200 !== vert) {
+        vert = !vert
+        render()
+    }
+}
+onresize()
+render()
 
 </script>
 </body>
