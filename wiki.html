@@ -6,6 +6,7 @@
 
 var output = document.createElement('div')
 output.className = 'pad'
+output.style.maxWidth = '900px'
 document.body.append(output)
 
 var bottom_pad = document.createElement('div')
@@ -94,9 +95,9 @@ function render () {
         t.style.height = '50vh'
         output.style.width = null
     } else {
-        t.style.width = '50vw'
+        t.style.width = '45vw'
         t.style.height = '100vh'
-        if (editing) output.style.width = '50vw'
+        output.style.width = editing ? '55vw' : null
     }
 }
 function toggle_editor () {

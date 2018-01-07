@@ -1,0 +1,76 @@
+<script type="statebus">
+path = window.location.pathname.replace(/\/$/, '')
+matches = path.match(/^\/@([^\/]*)(\/(.*))?/)
+user = matches[1]
+path = matches[3] or ''
+wikikey = "/user/#{user}/wiki/#{path}"
+if path.match(/^private(\/|$)/)
+  path = path.replace(/^private(\/|$)/, '')
+  wikikey = "/user/#{user}/private/wiki/#{path}"
+
+dom.BODY = ->
+  u = fetch('/current_user')
+  DIV {},
+    TEXTAREA
+      style:
+        display: if not state.editing then 'none'
+        position: 'fixed'
+        bottom: 0
+        right: 0
+        width: if state.vert then '100vw' else '45vw'
+        height: if state.vert then '50vh' else '100vh'
+        fontSize: 15
+        fontFamily: 'helvetica, monaco, lucida grande, avenir'
+      value: state[wikikey]
+      onChange: (e) ->
+        state[wikikey] = e.target.value
+        update_markdown_later()
+    if u.logged_in and u.user.key == '/user/' + user
+      DIV
+        position: 'fixed'
+        bottom: '0px'
+        right: '0px'
+        padding: '30px'
+        cursor: 'pointer'
+        textDecoration: 'underline'
+        backgroundColor: 'rgba(255, 255, 255, .5)'
+        onClick: -> state.editing = not state.editing; return
+        'edit'
+    DIV
+      width: if not state.vert and state.editing then '55vw' else null
+      maxWidth: 900
+      dangerouslySetInnerHTML: __html: state.markeddown
+    DIV height: if state.editing and state.vert then '50vh' else 0
+
+timer = null
+render_delay = 100
+update_markdown_later = ->
+  if timer then clearTimeout(timer)
+  timer = setTimeout(update_markdown, render_delay)
+update_markdown = ->
+  timer = null
+  state.markeddown = marked(state[wikikey] or '')
+bus.fetch_once(wikikey, update_markdown)
+
+window.onresize = () ->
+  w = window.innerWidth
+  h = window.innerHeight
+  state.vert =  w < 1200
+onresize()
+
+#</script><script src="https://stateb.us/client6.js"></script>
+<script src="https://invisible.college/js/marked.min.js"></script>
+<link rel="stylesheet" href="https://invisible.college/css/github-markdown.css">
+<script>
+setTimeout(function () {
+document.body.onkeydown = function (e) {
+    var mods = 0
+    for (k in {ctrlKey:1, shiftKey:1, altKey:1, metaKey:1})
+        if (e[k]) mods += 1
+
+    if (mods >= 2 && e.keyCode == 32) {
+        e.stopPropagation()
+        state.editing = !state.editing
+    }
+}}, 100)
+</script>
