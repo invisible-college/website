@@ -1,0 +1,167 @@
+* {
+    transition: all 400ms;
+}
+
+#artist-menu a{
+    text-decoration: none;
+    color: black;
+    font-size: 20px;
+    margin: 10px;
+    display: block;
+
+}
+
+.artist-wrap {
+    position: relative;
+    width: 60vw;
+    margin: 7vh auto;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+        align-items: center;
+    opacity: 1;
+}
+
+.artist-wrap .artist {
+    width: 100%;
+    box-shadow: 0px 3px 6px rgba(33, 33,33,.1);
+}
+
+.artist-cover {
+    height: auto;
+    width: 100%;
+}
+
+.artist-photo-wrap {
+    position: relative;
+    max-width: 150px;
+    transition: transform 900ms ease;
+    margin: 0 auto;
+}
+
+@media (min-width: 756px) {
+    .artist-photo-wrap {
+        max-width: 300px;
+    }
+}
+
+.artist-photo {
+    max-width: 100%;
+    max-height: 100%;
+    position: relative;
+}
+
+.artist-name {
+    margin: 0;
+    position: absolute;
+    bottom: 0px;
+    text-align: center;
+    width: 100%;
+    padding: 5px 0;
+}
+
+@media (min-width: 756px) {
+    .artist-name {
+        bottom: 10px;
+        font-size: 22px;
+        letter-spacing: 1.3px;
+        font-weight: bold;
+    }
+}
+
+.artist-info-wrap {
+    margin: 0;
+    border: 1px solid #eee;
+    width: 100%;
+}
+
+.artist-discipline {
+    text-transform: uppercase;
+    font-family: "Cutive Mono", monospace;
+    font-size: 18px;
+    letter-spacing: 2px;
+    font-weight: bold;
+}
+
+.artist-tagline {
+    padding: 10px 15px;
+    letter-spacing: .8px;
+    font-size: 22px;
+
+    text-transform: uppercase;
+    /*font-family: "Cutive Mono", monospace;*/
+    font-size: 18px;
+    letter-spacing: 1.5px;
+    /*font-weight: bold;*/
+}
+
+.artist-description {
+    padding: 10px 15px;
+    display: none;
+}
+
+/* Thanks https://www.cssfontstack.com/Helvetica */
+h1 {
+    font-family: Helvetica Neue, Helvetica,  'Nunito', sans-serif;
+    font-size: 23px;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 500;
+    line-height: 23px;
+}
+h3 {
+    font-family: Helvetica Neue, Helvetica,  'Nunito', sans-serif;
+    font-size: 17px;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 500;
+    line-height: 23px;
+}
+
+p,
+a {
+    font-family: Helvetica Neue, Helvetica,  'Nunito', sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 400;
+    line-height: 23px;
+}
+blockquote {
+    font-family: Helvetica Neue, Helvetica,  'Nunito', sans-serif;
+    font-size: 17px;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 400;
+    line-height: 23px;
+}
+pre {
+    font-family: Helvetica Neue, Helvetica,  'Nunito', sans-serif;
+    font-size: 11px;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 400;
+    line-height: 23px;
+}
+.bold {
+    font-weight: bolder;
+}
+
+.read-more,
+.artist-tagline,
+.artist-discipline {
+    text-align: center;
+}
+
+#artist-entry {
+    border: 1px solid rgba(33, 33, 33, .1);
+    background: rgba(33, 33, 33, .05);
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    padding: 20px 10px;
+}
+
+#artist-entry > * {
+    flex-basis: 40%;
+}
