@@ -1,8 +1,22 @@
 <script src="artist_functions.js" type="text/javascript"></script>
 <script type="statebus">
 dom.BODY = ->
-  if (@loading)
-    "Loading..."
+  artists_list = fetch("/residency/artists") or {}
+
+  if not artists_list.key?
+    artists_list.key = "/residency/artists"
+  if not artists_list.list?
+    artists_list.list = []
+
+  aip_entries = [
+        {key: "name", name: "Name"},
+        {key: "photo", name: "Photo URL"}
+        {key: "tagline", name: "Tagline"}
+        {key: "discipline", name: "Discipline"}
+        {key:" website", name: "Website"}
+        {key: "description", name: "Description", type: "textarea"}
+    ]
+  aip = fetch("ls/aip") # member-in-progress
 
   DIV
     style:
@@ -24,13 +38,6 @@ dom.BODY = ->
       A
         href: "http://invisible.college/residency/artists"
       "http://invisible.college/residency/artists"
-
-    artists_list = fetch("/residency/artists") or {}
-
-    if not artists_list.key?
-      artists_list.key = "/residency/artists"
-    if not artists_list.list?
-      artists_list.list = []
 
     DIV
       id: "artists"
@@ -136,15 +143,7 @@ dom.BODY = ->
                 "Add "+name
 
     # Artists-in-progress
-    aip_entries = [
-        {key: "name", name: "Name"},
-        {key: "photo", name: "Photo"}
-        {key: "tagline", name: "Tagline"}
-        {key: "discipline", name: "Discipline"}
-        {key:" website", name: "Website"}
-        {key: "description", name: "Description", type: "textarea"}
-    ]
-    aip = fetch("ls/aip") # member-in-progress
+
     entry_form(aip, aip_entries, "Artist", artists_list)
 
 

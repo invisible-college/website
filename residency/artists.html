@@ -18,7 +18,6 @@ dom.BODY = ->
       id: "artists"
       for artist, index in artists.list
         bg = getColor()
-        console.log(index)
         DIV
           className: "artist-wrap"
           DIV
@@ -59,7 +58,7 @@ dom.BODY = ->
                   A href: artist.website
                   artist.website
 
-    setTimeout( animatePhotos, 100)
+    setTimeout(animatePhotos, 5);
     showMenu(artists.list)
 </script><script src="https://stateb.us/client6.js" server=state://invisible.college></script>
 <script src="https://invisible.college/client/common.coffee"></script>

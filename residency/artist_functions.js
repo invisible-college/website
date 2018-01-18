@@ -1,6 +1,5 @@
 var usedColors = [];
 var fadeTime = 400;
-var animated = false;
 
 function getColor() {
     let colors = ['#98dafc', '#b0aac2', '#f2efe8', '#c2d4d8', '#dbe9d8'];
@@ -50,10 +49,10 @@ function rand(min, max) {
 }
 
 function showMenu(artists) {
-  if (!document.getElementById("artists")) return () => {
-    setTimeout( () => showMenu(artists), 1000);
-  }
   console.log("showMenu()");
+  if (!document.getElementById("artists")) return setTimeout( () => showMenu(artists), 1000);
+
+  console.log("showMenu() 2");
   console.log(artists);
     let menu = document.createElement("div");
     menu.setAttribute("id", "artist-menu");
@@ -65,13 +64,14 @@ function showMenu(artists) {
         menu.appendChild(anchor);
     });
 
-    document.body.insertBefore(menu, document.getElementById("artists"));
+    console.log(menu);
+
+    document.querySelector("#artists").insertBefore(menu, document.querySelector(".artist-wrap"));
 }
 
 function animatePhotos() {
   let photos = document.querySelectorAll(".artist-photo-wrap");
   if (!photos.length) return;
-  if (animated) return;
 
   animated = true;
   photos.forEach( (photo, idx) => {
