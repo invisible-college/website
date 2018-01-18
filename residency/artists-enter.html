@@ -1,8 +1,22 @@
+<script src="artist_functions.js" type="text/javascript"></script>
 <script type="statebus">
 dom.BODY = ->
+  artists_list = fetch("/residency/artists") or {}
 
-  if (@loading)
-    "Loading..."
+  if not artists_list.key?
+    artists_list.key = "/residency/artists"
+  if not artists_list.list?
+    artists_list.list = []
+
+  aip_entries = [
+        {key: "name", name: "Name"},
+        {key: "photo", name: "Photo URL"}
+        {key: "tagline", name: "Tagline"}
+        {key: "discipline", name: "Discipline"}
+        {key:" website", name: "Website"}
+        {key: "description", name: "Description", type: "textarea"}
+    ]
+  aip = fetch("ls/aip") # member-in-progress
 
   DIV
     style:
@@ -15,7 +29,7 @@ dom.BODY = ->
       style:
         fontWeight: 'bold'
         fontSize: '1.5em'
-      'Enter Projects'
+      'Enter the Artmaker'
 
     DIV
       style:
@@ -25,52 +39,48 @@ dom.BODY = ->
         href: "http://invisible.college/residency/artists"
       "http://invisible.college/residency/artists"
 
-    artists_list = fetch("/residency/artists") or {}
-
-    if not artists_list.key?
-      artists_list.key = "/residency/artists"
-    if not artists_list.list?
-      artists_list.list = []
-
     DIV
-      style:
-        margin: "10px"
-        float: "clear"
+      id: "artists"
       for artist in artists_list.list
-        console.log(JSON.stringify(artist))
-        if not artist.key?
-          console.log("No entry key!")
-        if not artist.name?
-          console.log("No entry name")
-
+        bg = getColor()
         DIV
-          style: null
+          className: "artist-wrap"
           DIV
-            style: float: "left"
-            HEADER
-              A
-                href: artist.url
-                artist.name
-            IMG
-              src: artist.photo
-            P
+            className: "artist"
+            DIV
+              className: "artist-cover"
               style:
-                marginTop: '0px'
-              artist.description
-          I
-            style:
-              margin: "20px"
-              float: "left"
-            className: 'demo-icon icon-cancel-circled'
-            onClick: (e) =>
-              l = projects_list.list.slice()
-              i = l.indexOf(project)
-              l.splice(i,1)
-              projects_list.list = l
-              save(projects_list)
-          DIV
-            style:
-              clear: "both"
+                backgroundColor: bg
+              DIV
+                className: "artist-photo-wrap"
+                IMG
+                  className: "artist-photo"
+                  src: artist.photo
+                H3
+                  className: "artist-name"
+                  style:
+                    backgroundColor: bg
+                  artist.name
+            DIV
+              className: "artist-info-wrap"
+              P
+                className:"artist-discipline"
+                artist.discipline or "(needs a discipline)"
+              P
+                className: "artist-tagline"
+                artist.tagline or "needs a tagline"
+              P
+                className: "read-more"
+                dataName: artist.name
+                onClick: toggleDescription
+                "More"
+              P
+                className: "artist-description"
+                id: artist.name + "-descr"
+                artist.description
+                if artist.website
+                  A href: artist.website
+                  artist.website
 
     # Function to generate an entry form
     # tip: thing-in-progress, the object to build and save
@@ -81,6 +91,7 @@ dom.BODY = ->
     # name: string name for the thing to add
     entry_form = (tip, entries, name, listobj) ->
         DIV
+            id: "artist-entry"
             style:
                 margin: "10px"
                 float: "clear"
@@ -89,17 +100,35 @@ dom.BODY = ->
                     console.log("No entry key!")
                 if not entry.name?
                     console.log("No entry name")
+                DIV
+                  className: "form-group"
 
-                INPUT
-                    type: 'text'
-                    id: 'new_'+entry.key
-                    # Construct the placeholder from the
-                    # previous value-in-progress, or construct
-                    # the name from the thing-in-progress + entry key
-                    placeholder: (tip and tip[entry.key]) or name + " " + entry.name
-                    onChange: (e) =>
-                        tip[entry.key] = e.target.value;
-                        save(tip);
+                  LABEL
+                    for: entry.name
+                    entry.name + ": "
+                    className: "form-control"
+
+                  if entry.type == "textarea"
+                    TEXTAREA
+                      name: entry.name
+                      id: 'new_'+entry.key
+                      type: entry.type
+                      className: "form-control"
+                  else
+
+                    INPUT
+                        type: 'text'
+                        name: entry.name
+                        id: 'new_'+entry.key
+                        className: "form-control"
+
+                        # Construct the placeholder from the
+                        # previous value-in-progress, or construct
+                        # the name from the thing-in-progress + entry key
+                        placeholder: (tip and tip[entry.key]) or name + " " + entry.name
+                        onChange: (e) =>
+                            tip[entry.key] = e.target.value;
+                            save(tip);
             BUTTON
                 id: 'submit'
                 onClick: (e) =>
@@ -114,13 +143,9 @@ dom.BODY = ->
                 "Add "+name
 
     # Artists-in-progress
-    aip_entries = [
-        {key: "name", name: "Name"},
-        {key: "photo", name: "photo"}
-        {key: "description", name: "Description"}
-    ]
-    aip = fetch("ls/aip") # member-in-progress
+
     entry_form(aip, aip_entries, "Artist", artists_list)
+
 
 </script>
 
@@ -151,9 +176,11 @@ dom.BODY = ->
   <link href='https://fonts.googleapis.com/css?family=Ovo|Muli:300' rel='stylesheet' type='text/css'>
 
   <!-- Custom styles for this template -->
-  <link href="/css/cover.css" rel="stylesheet">
-  <link href="/css/fontello.css" rel="stylesheet">
-  <!--<link href="css/google-type.css" rel="stylesheet">-->
+  <link href="artists.css" rel="stylesheet">
+
+  <!-- <link href="/css/cover.css" rel="stylesheet"> -->
+  <!-- <link href="/css/fontello.css" rel="stylesheet"> -->
+  <!-- <link href="css/google-type.css" rel="stylesheet">-->
 
 </head>
 
